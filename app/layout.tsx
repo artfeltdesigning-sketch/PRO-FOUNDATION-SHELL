@@ -1,14 +1,16 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 
-const inter = Inter({
-  subsets: ["latin"]
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  weight: ["500", "600", "700"]
 });
 
 export const metadata = {
-  title: "PROMPTER CT PRO",
-  description: "AI Creative Director OS"
+  title: "CTPRO.ai",
+  description: "Premium AI Creative Production OS"
 };
 
 export default function RootLayout({
@@ -21,11 +23,11 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
     >
-      <body className={inter.className}>
+      <body className={manrope.variable}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem
+          enableSystem={false}
         >
           {children}
         </ThemeProvider>
