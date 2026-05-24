@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Sparkles,
-  Wand2
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Sparkles, Wand2 } from "lucide-react";
 
 import Dropdown from "./dropdown";
 import UploadZone from "./upload-zone";
@@ -51,7 +48,7 @@ const lightingOptions = [
   "Volumetric God Rays"
 ];
 
-const cameraOptions = [
+const imageCameras = [
   "Hero Shot",
   "Close Up",
   "Extreme Close Up",
@@ -64,13 +61,28 @@ const cameraOptions = [
   "Cinematic Orbit"
 ];
 
-const chipItems = [
+const motionCameras = [
+  "Smooth Dolly Push",
+  "Orbit Reveal",
+  "FPV Flythrough",
+  "Drone Pull Back",
+  "Tracking Shot",
+  "Crane Rise",
+  "Parallax Move",
+  "Steadicam Walk",
+  "Gimbal Follow",
+  "Helicopter Reveal"
+];
+
+const environments = [
   "Cloud Atmosphere",
   "Rain FX",
   "Fog Layer",
   "Smoke FX",
   "Luxury Interior",
-  "Modern Exterior"
+  "Modern Exterior",
+  "Sunset Sky",
+  "Night City Glow"
 ];
 
 export default function PromptWorkspace({
@@ -83,59 +95,44 @@ export default function PromptWorkspace({
 
   const [style, setStyle] =
     useState(
-      "Ultra Realistic Cinematic"
+      creativeStyles[0]
     );
 
   const [lut, setLut] =
-    useState(
-      "Hollywood Blockbuster"
-    );
+    useState(luts[0]);
 
   const [lighting, setLighting] =
     useState(
-      "Golden Hour Cinematic"
+      lightingOptions[0]
     );
 
   const [camera, setCamera] =
-    useState("Hero Shot");
+    useState(
+      imageCameras[0]
+    );
+
+  const [environment, setEnvironment] =
+    useState(
+      environments[0]
+    );
 
   const [file, setFile] =
     useState<File | null>(null);
 
-  const [chips, setChips] =
-    useState<string[]>([]);
-
-  const toggleChip = (
-    chip: string
-  ) => {
-    setChips((prev) =>
-      prev.includes(chip)
-        ? prev.filter(
-            (x) => x !== chip
-          )
-        : [...prev, chip]
-    );
-  };
-
-  const handleReset = () => {
-    setPrompt("");
-    setStyle(
-      "Ultra Realistic Cinematic"
-    );
-    setLut(
-      "Hollywood Blockbuster"
-    );
-    setLighting(
-      "Golden Hour Cinematic"
-    );
-    setCamera("Hero Shot");
-    setFile(null);
-    setChips([]);
-    onReset();
-  };
+  useEffect(() => {
+    if (mode === "motion") {
+      setCamera(
+        motionCameras[0]
+      );
+    } else {
+      setCamera(
+        imageCameras[0]
+      );
+    }
+  }, [mode]);
 
   const handleGenerate = () => {
-    const output =
+    const result =
       decodeInstruction({
         userInput: prompt,
         mode,
@@ -143,40 +140,75 @@ export default function PromptWorkspace({
         lut,
         lighting,
         camera,
-        chips,
-        hasReference: !!file
+        environment,
+        hasReference:
+          !!file
       });
 
-    onGenerate(output);
+    onGenerate(result);
   };
+
+  const handleReset = () => {
+    setPrompt("");
+    setStyle(
+      creativeStyles[0]
+    );
+    setLut(luts[0]);
+    setLighting(
+      lightingOptions[0]
+    );
+    setEnvironment(
+      environments[0]
+    );
+    setFile(null);
+
+    if (mode === "motion") {
+      setCamera(
+        motionCameras[0]
+      );
+    } else {
+      setCamera(
+        imageCameras[0]
+      );
+    }
+
+    onReset();
+  };
+
+  const cameraOptions =
+    mode === "motion"
+      ? motionCameras
+      : imageCameras;
 
   return (
     <section className="glass workspace-shell">
       <div className="workspace-top">
         <div>
-          <h2 className="workspace-title">
+          <div className="workspace-title">
             Creative Director
             Command Center
-          </h2>
+          </div>
 
-          <p className="muted">
+          <div className="muted">
             Transform raw ideas
             into premium AI
             production output
-          </p>
+          </div>
         </div>
 
         <button className="primary-chip">
           <Sparkles size={16} />
-          {mode === "image"
-            ? "Image Mode"
-            : "Motion Mode"}
+          {mode === "motion"
+            ? "Motion Production Mode"
+            : "Image Production Mode"}
         </button>
       </div>
 
-      <div className="prompt-command glass-inner">
+      <div className="glass-inner prompt-command">
         <textarea
           value={prompt}
+          spellCheck={false}
+          autoCorrect="off"
           onChange={(e) =>
             setPrompt(
               e.target.value
@@ -190,7 +222,9 @@ export default function PromptWorkspace({
         <Dropdown
           label="Creative Style"
           value={style}
-          options={creativeStyles}
+          options={
+            creativeStyles
+          }
           onChange={setStyle}
         />
 
@@ -204,34 +238,37 @@ export default function PromptWorkspace({
         <Dropdown
           label="Lighting"
           value={lighting}
-          options={lightingOptions}
-          onChange={setLighting}
+          options={
+            lightingOptions
+          }
+          onChange={
+            setLighting
+          }
         />
 
         <Dropdown
-          label="Camera"
+          label={
+            mode === "motion"
+              ? "Motion Camera"
+              : "Camera"
+          }
           value={camera}
-          options={cameraOptions}
+          options={
+            cameraOptions
+          }
           onChange={setCamera}
         />
-      </div>
 
-      <div className="chips-row">
-        {chipItems.map((chip) => (
-          <button
-            key={chip}
-            className={`tag-chip ${
-              chips.includes(chip)
-                ? "active"
-                : ""
-            }`}
-            onClick={() =>
-              toggleChip(chip)
-            }
-          >
-            {chip}
-          </button>
-        ))}
+        <Dropdown
+          label="Environment Engine"
+          value={environment}
+          options={
+            environments
+          }
+          onChange={
+            setEnvironment
+          }
+        />
       </div>
 
       <UploadZone
@@ -242,14 +279,18 @@ export default function PromptWorkspace({
       <div className="workspace-actions">
         <button
           className="secondary-btn"
-          onClick={handleReset}
+          onClick={
+            handleReset
+          }
         >
           Reset Workspace
         </button>
 
         <button
           className="generate-btn"
-          onClick={handleGenerate}
+          onClick={
+            handleGenerate
+          }
         >
           <Wand2 size={18} />
           Generate Creative Intelligence
