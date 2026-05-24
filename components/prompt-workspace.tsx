@@ -1,7 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Sparkles, Wand2 } from "lucide-react";
+import {
+  useEffect,
+  useState
+} from "react";
+import {
+  Sparkles,
+  Wand2
+} from "lucide-react";
 
 import Dropdown from "./dropdown";
 import UploadZone from "./upload-zone";
@@ -12,7 +18,6 @@ type Props = {
   onGenerate: (
     output: string
   ) => void;
-  onReset: () => void;
 };
 
 const creativeStyles = [
@@ -87,8 +92,7 @@ const environments = [
 
 export default function PromptWorkspace({
   mode,
-  onGenerate,
-  onReset
+  onGenerate
 }: Props) {
   const [prompt, setPrompt] =
     useState("");
@@ -172,7 +176,7 @@ export default function PromptWorkspace({
       );
     }
 
-    onReset();
+    onGenerate("");
   };
 
   const cameraOptions =
@@ -185,22 +189,28 @@ export default function PromptWorkspace({
       <div className="workspace-top">
         <div>
           <div className="workspace-title">
-            Creative Director
-            Command Center
+            Create With
+            CTPRO.ai
           </div>
 
-          <div className="muted">
-            Transform raw ideas
-            into premium AI
-            production output
+          <div
+            className="muted"
+            style={{
+              marginTop: 14
+            }}
+          >
+            Transform ideas
+            into premium
+            production-ready
+            AI creative output
           </div>
         </div>
 
         <button className="primary-chip">
           <Sparkles size={16} />
           {mode === "motion"
-            ? "Motion Production Mode"
-            : "Image Production Mode"}
+            ? "Motion Production"
+            : "Image Production"}
         </button>
       </div>
 
@@ -293,7 +303,8 @@ export default function PromptWorkspace({
           }
         >
           <Wand2 size={18} />
-          Generate Creative Intelligence
+          Generate Creative
+          Intelligence
         </button>
       </div>
     </section>
