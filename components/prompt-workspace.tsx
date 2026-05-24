@@ -1,6 +1,11 @@
 "use client";
 
-import { Sparkles, Wand2, Upload, ChevronDown } from "lucide-react";
+import {
+  Sparkles,
+  Wand2,
+  Upload,
+  ChevronDown
+} from "lucide-react";
 
 export default function PromptWorkspace() {
   return (
@@ -8,28 +13,29 @@ export default function PromptWorkspace() {
       <div className="workspace-top">
         <div>
           <h2 className="workspace-title">
-            Creative Workspace
+            Creative Director Command Center
           </h2>
+
           <p className="muted">
-            AI decodes any language into cinematic prompts
+            Transform creative intent into production-grade AI direction
           </p>
         </div>
 
         <button className="primary-chip">
           <Sparkles size={16} />
-          AI Brain Active
+          Creative Intelligence Active
         </button>
       </div>
 
       <div className="prompt-command glass-inner">
         <textarea
-          placeholder="Describe anything in Hindi / Gujarati / English / mixed language..."
+          placeholder="Enter your creative brief, campaign objective, visual direction, or multilingual production intent..."
         />
       </div>
 
       <div className="controls-grid">
         <button className="premium-select">
-          <span>Image AI</span>
+          <span>Image AI Engine</span>
           <ChevronDown size={16} />
         </button>
 
@@ -39,54 +45,64 @@ export default function PromptWorkspace() {
         </button>
 
         <button className="premium-select">
-          <span>Golden Hour Lighting</span>
+          <span>Cinematic Lighting System</span>
           <ChevronDown size={16} />
         </button>
 
         <button className="premium-select">
-          <span>Hero Shot Camera</span>
+          <span>Camera Direction Engine</span>
           <ChevronDown size={16} />
         </button>
       </div>
 
       <div className="chips-row">
         <button className="tag-chip active">
-          Cloud Sky
+          Cloud Atmosphere
         </button>
+
         <button className="tag-chip">
-          Rain
+          Rain FX
         </button>
+
         <button className="tag-chip">
-          Fog
+          Fog Layer
         </button>
+
         <button className="tag-chip">
-          Smoke
+          Smoke FX
         </button>
+
         <button className="tag-chip">
           Luxury Interior
+        </button>
+
+        <button className="tag-chip">
+          Modern Exterior
         </button>
       </div>
 
       <div className="upload-zone">
         <Upload size={20} />
+
         <div>
           <strong>
-            Reference Upload
+            Creative References
           </strong>
+
           <p className="muted">
-            Drag & drop reference image
+            Drop moodboards, visuals, screenshots, or brand references
           </p>
         </div>
       </div>
 
       <div className="workspace-actions">
         <button className="secondary-btn">
-          Clear
+          Reset Workspace
         </button>
 
         <button className="generate-btn">
           <Wand2 size={18} />
-          Generate Prompt
+          Generate Creative Intelligence
         </button>
       </div>
     </section>
