@@ -1,3 +1,9 @@
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY!,
+});
+
 type DecodeInput = {
   userInput: string;
   mode: "image" | "motion";
@@ -10,102 +16,100 @@ type DecodeInput = {
   hasReference: boolean;
 };
 
-function normalizePrompt(
-  input: string
-) {
-  return input
-    .replace(/muhje/gi, "")
-    .replace(/muje/gi, "")
-    .replace(/chahiye/gi, "")
-    .replace(/chaiye/gi, "")
-    .replace(/ek/gi, "a")
-    .replace(/ladki/gi, "beautiful woman")
-    .replace(/aadmi/gi, "man")
-    .trim();
-}
+const SYSTEM_PROMPT = `
+You are CT PRO AI Elite Creative Director.
 
-export function decodeInstruction(
+Your job:
+Understand ANY user prompt dynamically.
+
+Rules:
+- Interpret vague prompts
+- Decode Hinglish
+- Rewrite into premium cinematic English
+- Infer missing visual details
+- Never copy raw text directly
+- Expand creatively
+
+Return ONLY JSON.
+`;
+
+export async function decodeInstruction(
   input: DecodeInput
 ) {
-  const subject =
-    normalizePrompt(
-      input.userInput
-    );
+  const completion =
+    await client.chat.completions.create({
+      model: "gpt-4o",
+      temperature: 1.1,
+      response_format: {
+        type: "json_object",
+      },
+      messages: [
+        {
+          role: "system",
+          content: SYSTEM_PROMPT,
+        },
+        {
+          role: "user",
+          content: `
+User Input:
+${input.userInput}
 
-  if (
-    !subject.trim()
-  ) {
-    return "";
-  }
+Mode:
+${input.mode}
 
-  if (
-    input.mode ===
-    "motion"
-  ) {
-    return `
-FINAL READY MOTION PROMPT
+Settings:
+style=${input.style}
+lighting=${input.lighting}
+camera=${input.camera}
+lut=${input.lut}
+environment=${input.environment}
+reference=${input.hasReference}
 
-AI CREATIVE DIRECTOR INTELLIGENCE
-
-User motion intent has been professionally interpreted into premium cinematic English production language.
-
-SUBJECT
-Create a cinematic premium motion sequence featuring ${subject}.
-
-CREATIVE STYLE
-${input.style}
-
-MOTION CAMERA
-${input.camera}
-
-LIGHTING
-${input.lighting}
-
-COLOR GRADING / LUT
-${input.lut}
-
-ENVIRONMENT ENGINE
-${input.environment}
-
-ASPECT RATIO
-${input.ratio}
-
-REFERENCE
-${
-  input.hasReference
-    ? "Reference image attached."
-    : "No reference attached."
+Return:
+{
+  "subject":"",
+  "creativeStyle":"",
+  "camera":"",
+  "lighting":"",
+  "colorGrading":"",
+  "environment":"",
+  "finalOutput":""
 }
+          `,
+        },
+      ],
+    });
 
-FINAL OUTPUT
-Create a premium cinematic motion sequence with realistic camera movement, smooth choreography, luxury commercial quality, production-grade motion realism, zero cheap AI artifacts.
-`;
-  }
+  const parsed = JSON.parse(
+    completion.choices[0].message.content || "{}"
+  );
 
   return `
-FINAL READY IMAGE PROMPT
+FINAL READY ${
+    input.mode === "motion"
+      ? "MOTION"
+      : "IMAGE"
+  } PROMPT
 
 AI CREATIVE DIRECTOR INTELLIGENCE
 
-User intent has been professionally interpreted into premium cinematic English production language.
-
 SUBJECT
-Create an ultra realistic premium cinematic image featuring ${subject}.
+${parsed.subject}
 
 CREATIVE STYLE
-${input.style}
+${parsed.creativeStyle}
 
 CAMERA
-${input.camera}
+${parsed.camera}
 
 LIGHTING
-${input.lighting}
+${parsed.lighting}
 
 COLOR GRADING / LUT
-${input.lut}
+${parsed.colorGrading}
 
 ENVIRONMENT ENGINE
-${input.environment}
+${parsed.environment}
 
 ASPECT RATIO
 ${input.ratio}
@@ -118,6 +122,6 @@ ${
 }
 
 FINAL OUTPUT
-Create a premium ultra realistic cinematic still image with blockbuster visual storytelling, commercial realism, luxury textures, realistic lighting, and zero cheap AI artifacts.
+${parsed.finalOutput}
 `;
 }
