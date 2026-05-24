@@ -1,23 +1,14 @@
 "use client";
 
-import {
-  useEffect,
-  useState
-} from "react";
-import {
-  Sparkles,
-  Wand2
-} from "lucide-react";
-
+import { useEffect, useState } from "react";
+import { Sparkles, Wand2 } from "lucide-react";
 import Dropdown from "./dropdown";
 import UploadZone from "./upload-zone";
 import { decodeInstruction } from "../lib/ai-brain";
 
 type Props = {
   mode: "image" | "motion";
-  onGenerate: (
-    output: string
-  ) => void;
+  onGenerate: (output: string) => void;
 };
 
 const creativeStyles = [
@@ -113,108 +104,59 @@ export default function PromptWorkspace({
   mode,
   onGenerate
 }: Props) {
-  const [prompt, setPrompt] =
-    useState("");
-
-  const [style, setStyle] =
-    useState(
-      creativeStyles[0]
-    );
-
-  const [lut, setLut] =
-    useState(luts[0]);
-
-  const [lighting, setLighting] =
-    useState(
-      lightingOptions[0]
-    );
-
-  const [camera, setCamera] =
-    useState(
-      imageCameras[0]
-    );
-
-  const [environment, setEnvironment] =
-    useState(
-      environments[0]
-    );
-
-  const [ratio, setRatio] =
-    useState(
-      imageRatios[0]
-    );
-
-  const [file, setFile] =
-    useState<File | null>(null);
+  const [prompt, setPrompt] = useState("");
+  const [style, setStyle] = useState(creativeStyles[0]);
+  const [lut, setLut] = useState(luts[0]);
+  const [lighting, setLighting] = useState(lightingOptions[0]);
+  const [camera, setCamera] = useState(imageCameras[0]);
+  const [environment, setEnvironment] = useState(environments[0]);
+  const [ratio, setRatio] = useState(imageRatios[0]);
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (mode === "motion") {
-      setCamera(
-        motionCameras[0]
-      );
-      setRatio(
-        motionRatios[0]
-      );
+      setCamera(motionCameras[0]);
+      setRatio(motionRatios[0]);
     } else {
-      setCamera(
-        imageCameras[0]
-      );
-      setRatio(
-        imageRatios[0]
-      );
+      setCamera(imageCameras[0]);
+      setRatio(imageRatios[0]);
     }
   }, [mode]);
 
-  const handleGenerate = () => {
-    const result =
-      decodeInstruction({
-        userInput: prompt,
-        mode,
-        style,
-        lut,
-        lighting,
-        camera,
-        environment,
-        ratio,
-        hasReference:
-          !!file
-      });
+  function handleGenerate() {
+    const result = decodeInstruction({
+      userInput: prompt,
+      mode,
+      style,
+      lut,
+      lighting,
+      camera,
+      environment,
+      ratio,
+      hasReference: !!file
+    });
 
     onGenerate(result);
-  };
+  }
 
-  const handleReset = () => {
+  function handleReset() {
     setPrompt("");
-    setStyle(
-      creativeStyles[0]
-    );
+    setStyle(creativeStyles[0]);
     setLut(luts[0]);
-    setLighting(
-      lightingOptions[0]
-    );
-    setEnvironment(
-      environments[0]
-    );
+    setLighting(lightingOptions[0]);
+    setEnvironment(environments[0]);
     setFile(null);
 
     if (mode === "motion") {
-      setCamera(
-        motionCameras[0]
-      );
-      setRatio(
-        motionRatios[0]
-      );
+      setCamera(motionCameras[0]);
+      setRatio(motionRatios[0]);
     } else {
-      setCamera(
-        imageCameras[0]
-      );
-      setRatio(
-        imageRatios[0]
-      );
+      setCamera(imageCameras[0]);
+      setRatio(imageRatios[0]);
     }
 
     onGenerate("");
-  };
+  }
 
   const cameraOptions =
     mode === "motion"
@@ -229,26 +171,17 @@ export default function PromptWorkspace({
   return (
     <section className="workspace-shell glass">
       <div className="workspace-top">
-        <div>
+        <div className="workspace-copy">
           <div className="workspace-title">
-            Create With
-            CTPRO.ai
+            Create With CTPRO.ai
           </div>
 
-          <div
-            className="muted"
-            style={{
-              marginTop: 14
-            }}
-          >
-            Transform ideas
-            into premium
-            production-ready
-            AI creative output
+          <div className="muted workspace-subtitle">
+            Transform ideas into premium production-ready AI creative output
           </div>
         </div>
 
-        <button className="primary-chip">
+        <button className="primary-chip workspace-mode-chip">
           <Sparkles size={16} />
           {mode === "motion"
             ? "Motion Production"
@@ -262,9 +195,7 @@ export default function PromptWorkspace({
           spellCheck={false}
           autoCorrect="off"
           onChange={(e) =>
-            setPrompt(
-              e.target.value
-            )
+            setPrompt(e.target.value)
           }
           placeholder="Describe your idea in Hindi, Gujarati, English, or mixed language..."
         />
@@ -274,9 +205,7 @@ export default function PromptWorkspace({
         <Dropdown
           label="Creative Style"
           value={style}
-          options={
-            creativeStyles
-          }
+          options={creativeStyles}
           onChange={setStyle}
         />
 
@@ -290,12 +219,8 @@ export default function PromptWorkspace({
         <Dropdown
           label="Lighting"
           value={lighting}
-          options={
-            lightingOptions
-          }
-          onChange={
-            setLighting
-          }
+          options={lightingOptions}
+          onChange={setLighting}
         />
 
         <Dropdown
@@ -305,29 +230,21 @@ export default function PromptWorkspace({
               : "Camera"
           }
           value={camera}
-          options={
-            cameraOptions
-          }
+          options={cameraOptions}
           onChange={setCamera}
         />
 
         <Dropdown
           label="Environment Engine"
           value={environment}
-          options={
-            environments
-          }
-          onChange={
-            setEnvironment
-          }
+          options={environments}
+          onChange={setEnvironment}
         />
 
         <Dropdown
           label="Aspect Ratio"
           value={ratio}
-          options={
-            ratioOptions
-          }
+          options={ratioOptions}
           onChange={setRatio}
         />
       </div>
@@ -340,18 +257,14 @@ export default function PromptWorkspace({
       <div className="workspace-actions">
         <button
           className="secondary-btn"
-          onClick={
-            handleReset
-          }
+          onClick={handleReset}
         >
           Reset Workspace
         </button>
 
         <button
           className="generate-btn"
-          onClick={
-            handleGenerate
-          }
+          onClick={handleGenerate}
         >
           <Wand2 size={18} />
           Generate Creative Intelligence
