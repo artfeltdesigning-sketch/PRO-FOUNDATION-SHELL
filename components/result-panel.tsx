@@ -6,12 +6,26 @@ import {
   Sparkles
 } from "lucide-react";
 
-export default function ResultPanel() {
+type Props = {
+  output?: string;
+};
+
+export default function ResultPanel({
+  output
+}: Props) {
+  const copyOutput = async () => {
+    if (!output) return;
+    await navigator.clipboard.writeText(output);
+  };
+
   return (
     <aside className="glass output-shell">
       <div className="output-top">
         <div>
-          <h2 className="workspace-title" style={{ fontSize: "28px" }}>
+          <h2
+            className="workspace-title"
+            style={{ fontSize: "28px" }}
+          >
             Creative Intelligence Console
           </h2>
 
@@ -28,11 +42,15 @@ export default function ResultPanel() {
 
       <textarea
         readOnly
+        value={output || ""}
         placeholder="Structured prompt intelligence will appear here after generation..."
       />
 
       <div className="workspace-actions">
-        <button className="secondary-btn">
+        <button
+          className="secondary-btn"
+          onClick={copyOutput}
+        >
           <Copy size={16} />
           Copy Output
         </button>
