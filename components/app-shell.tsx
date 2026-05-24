@@ -7,7 +7,10 @@ import PromptWorkspace from "./prompt-workspace";
 import ResultPanel from "./result-panel";
 
 export default function AppShell() {
-  const [collapsed, setCollapsed] =
+  const [sidebarCollapsed, setSidebarCollapsed] =
+    useState(false);
+
+  const [outputCollapsed, setOutputCollapsed] =
     useState(false);
 
   const [mode, setMode] =
@@ -18,16 +21,14 @@ export default function AppShell() {
   const [output, setOutput] =
     useState("");
 
-  const resetOutput = () => {
-    setOutput("");
-  };
-
   return (
     <main className="app-shell">
       <Sidebar
-        collapsed={collapsed}
+        collapsed={
+          sidebarCollapsed
+        }
         setCollapsed={
-          setCollapsed
+          setSidebarCollapsed
         }
         mode={mode}
         setMode={setMode}
@@ -36,11 +37,16 @@ export default function AppShell() {
       <PromptWorkspace
         mode={mode}
         onGenerate={setOutput}
-        onReset={resetOutput}
       />
 
       <ResultPanel
         output={output}
+        collapsed={
+          outputCollapsed
+        }
+        setCollapsed={
+          setOutputCollapsed
+        }
       />
     </main>
   );
