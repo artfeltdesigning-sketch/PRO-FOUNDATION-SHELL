@@ -8,7 +8,9 @@ export default function AppShell() {
   return (
     <main className="app-shell">
       <Sidebar />
+
       <PromptWorkspace />
+
       <ResultPanel />
     </main>
   );
