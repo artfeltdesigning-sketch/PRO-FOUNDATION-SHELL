@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Sparkles, Wand2 } from "lucide-react";
 import Dropdown from "./dropdown";
 import UploadZone from "./upload-zone";
-import { decodeInstruction } from "../lib/ai-brain";
 
 type Props = {
   mode: "image" | "motion";
