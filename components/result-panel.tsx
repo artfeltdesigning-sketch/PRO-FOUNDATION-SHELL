@@ -1,93 +1,71 @@
+// components/result-panel.tsx
+
 "use client";
 
-import { Copy } from "lucide-react";
+import {
+  Copy,
+  X
+} from "lucide-react";
 
 type Props = {
   output: string;
-  collapsed: boolean;
-  setCollapsed: (
-    value: boolean
-  ) => void;
+  open: boolean;
+  onClose: () => void;
 };
 
 export default function ResultPanel({
   output,
-  collapsed,
-  setCollapsed
+  open,
+  onClose
 }: Props) {
-  const copyOutput =
-    async () => {
-      if (!output) return;
+  async function copyOutput() {
+    if (!output) return;
 
-      await navigator.clipboard.writeText(
-        output
-      );
-    };
+    await navigator.clipboard.writeText(
+      output
+    );
+  }
 
   return (
     <aside
       className={`output-shell glass ${
-        collapsed
-          ? "collapsed"
-          : ""
+        open ? "open" : ""
       }`}
     >
-      <div
-        className="edge-toggle edge-right"
-        onClick={() =>
-          setCollapsed(
-            !collapsed
-          )
-        }
-      />
+      <div className="output-top">
+        <div>
+          <h2>
+            Prompt Output
+          </h2>
 
-      {!collapsed && (
-        <>
-          <div className="output-top">
-            <div>
-              <div
-                style={{
-                  fontSize: 30,
-                  fontWeight: 700,
-                  letterSpacing:
-                    "-0.04em"
-                }}
-              >
-                Prompt Output
-                Console
-              </div>
-
-              <div
-                className="muted"
-                style={{
-                  marginTop: 10
-                }}
-              >
-                Premium
-                production-ready
-                AI output
-              </div>
-            </div>
+          <div className="muted">
+            Production-ready AI
+            prompt output
           </div>
+        </div>
 
-          <div className="output-content">
-            {output ||
-              "Generated premium AI prompt output will appear here after generation."}
-          </div>
+        <button
+          className="secondary-btn"
+          onClick={onClose}
+        >
+          <X size={18} />
+        </button>
+      </div>
 
-          <div className="workspace-actions">
-            <button
-              className="generate-btn"
-              onClick={
-                copyOutput
-              }
-            >
-              <Copy size={18} />
-              Copy Output
-            </button>
-          </div>
-        </>
-      )}
+      <div className="output-content">
+        {output ||
+          "Generated premium AI prompt output will appear here after generation."}
+      </div>
+
+      <div className="workspace-actions">
+        <button
+          className="generate-btn"
+          onClick={copyOutput}
+        >
+          <Copy size={18} />
+          Copy Output
+        </button>
+      </div>
     </aside>
   );
 }
