@@ -3,9 +3,7 @@
 import {
   Sparkles,
   ImageIcon,
-  Clapperboard,
-  PanelLeftClose,
-  PanelLeftOpen
+  Clapperboard
 } from "lucide-react";
 
 import ThemeToggle from "./theme-toggle";
@@ -15,9 +13,7 @@ type Props = {
   setCollapsed: (
     value: boolean
   ) => void;
-
   mode: "image" | "motion";
-
   setMode: (
     mode: "image" | "motion"
   ) => void;
@@ -38,64 +34,47 @@ export default function Sidebar({
       }`}
     >
       <div
-        style={{
-          display: "flex",
-          justifyContent:
-            "space-between",
-          alignItems: "center"
-        }}
-      >
-        <div className="brand-row">
-          <div className="brand-icon">
-            CT
-          </div>
+        className="edge-toggle edge-left"
+        onClick={() =>
+          setCollapsed(
+            !collapsed
+          )
+        }
+      />
 
-          {!collapsed && (
-            <div className="brand-copy">
-              <div className="brand-title">
-                CTPRO.ai
-              </div>
-
-              <div className="brand-sub">
-                AI Creative
-                Production OS
-              </div>
-            </div>
-          )}
-        </div>
-
-        <button
-          onClick={() =>
-            setCollapsed(
-              !collapsed
-            )
-          }
+      <div className="brand-row">
+        <div
+          className="brand-icon"
           style={{
-            width: 46,
-            height: 46,
-            borderRadius: 16,
-            border: "none",
-            background:
-              "rgba(255,255,255,0.05)",
-            color:
-              "var(--text)",
-            display: "flex",
-            alignItems:
-              "center",
-            justifyContent:
-              "center"
+            transition:
+              "all 0.45s ease",
+            transform:
+              collapsed
+                ? "scale(0.92)"
+                : "scale(1)"
           }}
         >
-          {collapsed ? (
-            <PanelLeftOpen
-              size={20}
-            />
-          ) : (
-            <PanelLeftClose
-              size={20}
-            />
-          )}
-        </button>
+          CT
+        </div>
+
+        {!collapsed && (
+          <div
+            className="brand-copy"
+            style={{
+              animation:
+                "fadeUp 0.55s ease"
+            }}
+          >
+            <div className="brand-title">
+              CTPRO.ai
+            </div>
+
+            <div className="brand-sub">
+              AI Creative
+              Production OS
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="nav-list">
