@@ -1,63 +1,58 @@
 "use client";
 
-import {
-  Copy,
-  Download,
-  Sparkles
-} from "lucide-react";
+import { Copy } from "lucide-react";
 
 type Props = {
-  output?: string;
+  output: string;
 };
 
 export default function ResultPanel({
   output
 }: Props) {
-  const copyOutput = async () => {
-    if (!output) return;
-    await navigator.clipboard.writeText(output);
-  };
+  const handleCopy =
+    async () => {
+      if (!output) return;
+
+      await navigator.clipboard.writeText(
+        output
+      );
+    };
 
   return (
     <aside className="glass output-shell">
       <div className="output-top">
         <div>
           <h2
-            className="workspace-title"
-            style={{ fontSize: "28px" }}
+            style={{
+              fontSize: "28px",
+              fontWeight: 600,
+              letterSpacing:
+                "-0.03em"
+            }}
           >
-            Creative Intelligence Console
+            Prompt Output Console
           </h2>
 
           <p className="muted">
-            Real-time production-grade AI generation output
+            Production-grade AI
+            prompt generation
+            output
           </p>
         </div>
-
-        <button className="primary-chip">
-          <Sparkles size={16} />
-          Live Engine
-        </button>
       </div>
 
-      <textarea
-        readOnly
-        value={output || ""}
-        placeholder="Structured prompt intelligence will appear here after generation..."
-      />
+      <div className="output-content">
+        {output ||
+          "Generated AI prompt output will appear here after generation."}
+      </div>
 
       <div className="workspace-actions">
         <button
-          className="secondary-btn"
-          onClick={copyOutput}
+          className="generate-btn"
+          onClick={handleCopy}
         >
-          <Copy size={16} />
+          <Copy size={18} />
           Copy Output
-        </button>
-
-        <button className="generate-btn">
-          <Download size={16} />
-          Export Output
         </button>
       </div>
     </aside>
