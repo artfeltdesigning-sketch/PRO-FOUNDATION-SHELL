@@ -15,7 +15,6 @@ export default function ThemeToggle() {
         onClick={() => setTheme("light")}
       >
         <Sun size={16} />
-        Light
       </button>
 
       <button
@@ -25,7 +24,6 @@ export default function ThemeToggle() {
         onClick={() => setTheme("dark")}
       >
         <Moon size={16} />
-        Dark
       </button>
     </div>
   );
