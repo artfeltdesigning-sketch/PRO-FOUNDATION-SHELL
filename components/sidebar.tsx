@@ -3,16 +3,24 @@
 import {
   Sparkles,
   ImageIcon,
-  Clapperboard
+  Clapperboard,
+  PanelLeftClose,
+  PanelLeftOpen
 } from "lucide-react";
 
 import ThemeToggle from "./theme-toggle";
 
 type Props = {
   collapsed: boolean;
-  setCollapsed: (value: boolean) => void;
+  setCollapsed: (
+    value: boolean
+  ) => void;
+
   mode: "image" | "motion";
-  setMode: (mode: "image" | "motion") => void;
+
+  setMode: (
+    mode: "image" | "motion"
+  ) => void;
 };
 
 export default function Sidebar({
@@ -24,11 +32,19 @@ export default function Sidebar({
   return (
     <aside
       className={`glass sidebar-shell ${
-        collapsed ? "collapsed" : ""
+        collapsed
+          ? "collapsed"
+          : ""
       }`}
-      onClick={() => collapsed && setCollapsed(false)}
     >
-      <div className="sidebar-top">
+      <div
+        style={{
+          display: "flex",
+          justifyContent:
+            "space-between",
+          alignItems: "center"
+        }}
+      >
         <div className="brand-row">
           <div className="brand-icon">
             CT
@@ -36,16 +52,50 @@ export default function Sidebar({
 
           {!collapsed && (
             <div className="brand-copy">
-              <h1 className="brand-title">
+              <div className="brand-title">
                 CTPRO.ai
-              </h1>
+              </div>
 
-              <p className="brand-sub">
-                AI Creative Production OS
-              </p>
+              <div className="brand-sub">
+                AI Creative
+                Production OS
+              </div>
             </div>
           )}
         </div>
+
+        <button
+          onClick={() =>
+            setCollapsed(
+              !collapsed
+            )
+          }
+          style={{
+            width: 46,
+            height: 46,
+            borderRadius: 16,
+            border: "none",
+            background:
+              "rgba(255,255,255,0.05)",
+            color:
+              "var(--text)",
+            display: "flex",
+            alignItems:
+              "center",
+            justifyContent:
+              "center"
+          }}
+        >
+          {collapsed ? (
+            <PanelLeftOpen
+              size={20}
+            />
+          ) : (
+            <PanelLeftClose
+              size={20}
+            />
+          )}
+        </button>
       </div>
 
       <div className="nav-list">
@@ -55,10 +105,9 @@ export default function Sidebar({
               ? "active"
               : ""
           }`}
-          onClick={(e) => {
-            e.stopPropagation();
-            setMode("image");
-          }}
+          onClick={() =>
+            setMode("image")
+          }
         >
           <Sparkles />
           {!collapsed && (
@@ -72,14 +121,15 @@ export default function Sidebar({
               ? "active"
               : ""
           }`}
-          onClick={(e) => {
-            e.stopPropagation();
-            setMode("image");
-          }}
+          onClick={() =>
+            setMode("image")
+          }
         >
           <ImageIcon />
           {!collapsed && (
-            <span>Image Studio</span>
+            <span>
+              Image Studio
+            </span>
           )}
         </button>
 
@@ -89,14 +139,15 @@ export default function Sidebar({
               ? "active"
               : ""
           }`}
-          onClick={(e) => {
-            e.stopPropagation();
-            setMode("motion");
-          }}
+          onClick={() =>
+            setMode("motion")
+          }
         >
           <Clapperboard />
           {!collapsed && (
-            <span>Motion Studio</span>
+            <span>
+              Motion Studio
+            </span>
           )}
         </button>
       </div>
