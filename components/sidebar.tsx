@@ -1,80 +1,107 @@
 "use client";
 
 import { useState } from "react";
-import { Moon, Sun, PanelLeftClose, Sparkles, ImageIcon, Clapperboard, Camera } from "lucide-react";
-import { useTheme } from "next-themes";
+import {
+  Sparkles,
+  ImageIcon,
+  Clapperboard,
+  Camera
+} from "lucide-react";
+import ThemeToggle from "./theme-toggle";
 
 export default function Sidebar() {
-  const { theme, setTheme } = useTheme();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] =
+    useState(false);
 
   return (
     <aside
       className={`glass sidebar-shell ${
         collapsed ? "collapsed" : ""
       }`}
+      onClick={() =>
+        setCollapsed(!collapsed)
+      }
     >
+      {/* BRAND */}
       <div className="sidebar-top">
-        <div>
-          <h1 className="brand">
-            {collapsed ? "P" : "PROMPTER"}
-          </h1>
+        <div className="brand-wrap">
+          <div className="brand-logo">
+            P
+          </div>
+
           {!collapsed && (
-            <p className="muted">
-              AI Creative Director OS
-            </p>
+            <div className="brand-copy">
+              <h1 className="brand">
+                PROMPTER CT PRO
+              </h1>
+
+              <p className="muted">
+                AI Creative Production OS
+              </p>
+            </div>
           )}
         </div>
-
-        <button
-          className="icon-btn"
-          onClick={() =>
-            setCollapsed(!collapsed)
-          }
-        >
-          <PanelLeftClose size={18} />
-        </button>
       </div>
 
+      {/* NAV */}
       <div className="nav-list">
-        <button className="nav-item active">
-          <Sparkles size={18} />
-          {!collapsed && <span>AI Brain</span>}
-        </button>
-
-        <button className="nav-item">
-          <ImageIcon size={18} />
-          {!collapsed && <span>Image Studio</span>}
-        </button>
-
-        <button className="nav-item">
-          <Clapperboard size={18} />
-          {!collapsed && <span>Motion Studio</span>}
-        </button>
-
-        <button className="nav-item">
-          <Camera size={18} />
-          {!collapsed && <span>Camera Engine</span>}
-        </button>
-      </div>
-
-      <div className="theme-block">
         <button
-          className="icon-btn"
-          onClick={() =>
-            setTheme(
-              theme === "dark"
-                ? "light"
-                : "dark"
-            )
+          className="nav-item active"
+          onClick={(e) =>
+            e.stopPropagation()
           }
         >
-          {theme === "dark" ? (
-            <Sun size={18} />
-          ) : (
-            <Moon size={18} />
+          <Sparkles size={22} />
+          {!collapsed && (
+            <span>AI Brain</span>
           )}
         </button>
+
+        <button
+          className="nav-item"
+          onClick={(e) =>
+            e.stopPropagation()
+          }
+        >
+          <ImageIcon size={22} />
+          {!collapsed && (
+            <span>Image Studio</span>
+          )}
+        </button>
+
+        <button
+          className="nav-item"
+          onClick={(e) =>
+            e.stopPropagation()
+          }
+        >
+          <Clapperboard size={22} />
+          {!collapsed && (
+            <span>Motion Studio</span>
+          )}
+        </button>
+
+        <button
+          className="nav-item"
+          onClick={(e) =>
+            e.stopPropagation()
+          }
+        >
+          <Camera size={22} />
+          {!collapsed && (
+            <span>Camera Engine</span>
+          )}
+        </button>
+      </div>
+
+      {/* THEME */}
+      <div
+        className="theme-block"
+        onClick={(e) =>
+          e.stopPropagation()
+        }
+      >
+        <ThemeToggle />
       </div>
     </aside>
   );
