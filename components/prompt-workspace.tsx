@@ -123,8 +123,8 @@ export default function PromptWorkspace({
     }
   }, [mode]);
 
-  function handleGenerate() {
-    const result = decodeInstruction({
+  async function handleGenerate() {
+    const result = await decodeInstruction({
       userInput: prompt,
       mode,
       style,
