@@ -1,5 +1,7 @@
 "use client";
 
+import { Copy } from "lucide-react";
+
 type Props = {
   output: string;
   collapsed: boolean;
@@ -13,9 +15,18 @@ export default function ResultPanel({
   collapsed,
   setCollapsed
 }: Props) {
+  const copyOutput =
+    async () => {
+      if (!output) return;
+
+      await navigator.clipboard.writeText(
+        output
+      );
+    };
+
   return (
     <aside
-      className={`glass output-shell ${
+      className={`output-shell glass ${
         collapsed
           ? "collapsed"
           : ""
@@ -54,20 +65,26 @@ export default function ResultPanel({
               >
                 Premium
                 production-ready
-                AI prompt output
+                AI output
               </div>
             </div>
           </div>
 
-          <div
-            className="output-content"
-            style={{
-              boxShadow:
-                "inset 0 1px 0 rgba(255,255,255,0.04)"
-            }}
-          >
+          <div className="output-content">
             {output ||
-              "Generated premium AI output will appear here after generation."}
+              "Generated premium AI prompt output will appear here after generation."}
+          </div>
+
+          <div className="workspace-actions">
+            <button
+              className="generate-btn"
+              onClick={
+                copyOutput
+              }
+            >
+              <Copy size={18} />
+              Copy Output
+            </button>
           </div>
         </>
       )}
