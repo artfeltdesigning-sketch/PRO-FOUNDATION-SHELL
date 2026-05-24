@@ -18,7 +18,7 @@ export default function AppShell() {
   const [output, setOutput] =
     useState("");
 
-  const handleReset = () => {
+  const resetOutput = () => {
     setOutput("");
   };
 
@@ -36,7 +36,7 @@ export default function AppShell() {
       <PromptWorkspace
         mode={mode}
         onGenerate={setOutput}
-        onReset={handleReset}
+        onReset={resetOutput}
       />
 
       <ResultPanel
