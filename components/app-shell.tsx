@@ -1,3 +1,5 @@
+// components/app-shell.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -7,10 +9,10 @@ import PromptWorkspace from "./prompt-workspace";
 import ResultPanel from "./result-panel";
 
 export default function AppShell() {
-  const [sidebarCollapsed, setSidebarCollapsed] =
+  const [sidebarCollapsed] =
     useState(false);
 
-  const [outputCollapsed, setOutputCollapsed] =
+  const [outputOpen, setOutputOpen] =
     useState(false);
 
   const [mode, setMode] =
@@ -27,11 +29,12 @@ export default function AppShell() {
         collapsed={
           sidebarCollapsed
         }
-        setCollapsed={
-          setSidebarCollapsed
-        }
+        setCollapsed={() => {}}
         mode={mode}
         setMode={setMode}
+        onOpenOutput={() =>
+          setOutputOpen(true)
+        }
       />
 
       <PromptWorkspace
@@ -41,11 +44,9 @@ export default function AppShell() {
 
       <ResultPanel
         output={output}
-        collapsed={
-          outputCollapsed
-        }
-        setCollapsed={
-          setOutputCollapsed
+        open={outputOpen}
+        onClose={() =>
+          setOutputOpen(false)
         }
       />
     </main>
