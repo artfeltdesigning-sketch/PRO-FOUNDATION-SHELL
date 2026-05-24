@@ -27,7 +27,7 @@ export default function Sidebar({
 }: Props) {
   return (
     <aside
-      className={`glass sidebar-shell ${
+      className={`sidebar-shell glass ${
         collapsed
           ? "collapsed"
           : ""
@@ -43,28 +43,12 @@ export default function Sidebar({
       />
 
       <div className="brand-row">
-        <div
-          className="brand-icon"
-          style={{
-            transition:
-              "all 0.45s ease",
-            transform:
-              collapsed
-                ? "scale(0.92)"
-                : "scale(1)"
-          }}
-        >
+        <div className="brand-icon">
           CT
         </div>
 
         {!collapsed && (
-          <div
-            className="brand-copy"
-            style={{
-              animation:
-                "fadeUp 0.55s ease"
-            }}
-          >
+          <div className="brand-copy">
             <div className="brand-title">
               CTPRO.ai
             </div>
