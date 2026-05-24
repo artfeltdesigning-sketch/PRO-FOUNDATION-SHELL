@@ -14,7 +14,7 @@ export default function ThemeToggle() {
         }`}
         onClick={() => setTheme("light")}
       >
-        <Sun size={16} />
+        <Sun size={18} />
       </button>
 
       <button
@@ -23,7 +23,7 @@ export default function ThemeToggle() {
         }`}
         onClick={() => setTheme("dark")}
       >
-        <Moon size={16} />
+        <Moon size={18} />
       </button>
     </div>
   );
