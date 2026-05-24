@@ -1,6 +1,11 @@
 "use client";
 
-import { Copy } from "lucide-react";
+import {
+  Copy,
+  PanelRightClose,
+  PanelRightOpen
+} from "lucide-react";
+import { useState } from "react";
 
 type Props = {
   output: string;
@@ -9,7 +14,10 @@ type Props = {
 export default function ResultPanel({
   output
 }: Props) {
-  const handleCopy =
+  const [collapsed, setCollapsed] =
+    useState(false);
+
+  const copyOutput =
     async () => {
       if (!output) return;
 
@@ -19,42 +27,87 @@ export default function ResultPanel({
     };
 
   return (
-    <aside className="glass output-shell">
+    <aside
+      className={`glass output-shell ${
+        collapsed
+          ? "collapsed"
+          : ""
+      }`}
+    >
       <div className="output-top">
-        <div>
-          <h2
+        <div className="output-text">
+          <div
             style={{
-              fontSize: "28px",
-              fontWeight: 600,
+              fontSize: 26,
+              fontWeight: 700,
               letterSpacing:
-                "-0.03em"
+                "-0.04em"
             }}
           >
             Prompt Output Console
-          </h2>
+          </div>
 
-          <p className="muted">
+          <div className="muted output-sub">
             Production-grade AI
             prompt generation
             output
-          </p>
+          </div>
         </div>
-      </div>
 
-      <div className="output-content">
-        {output ||
-          "Generated AI prompt output will appear here after generation."}
-      </div>
-
-      <div className="workspace-actions">
         <button
-          className="generate-btn"
-          onClick={handleCopy}
+          onClick={() =>
+            setCollapsed(
+              !collapsed
+            )
+          }
+          style={{
+            width: 46,
+            height: 46,
+            borderRadius: 16,
+            border: "none",
+            background:
+              "rgba(255,255,255,0.05)",
+            color:
+              "var(--text)",
+            display: "flex",
+            alignItems:
+              "center",
+            justifyContent:
+              "center"
+          }}
         >
-          <Copy size={18} />
-          Copy Output
+          {collapsed ? (
+            <PanelRightOpen
+              size={20}
+            />
+          ) : (
+            <PanelRightClose
+              size={20}
+            />
+          )}
         </button>
       </div>
+
+      {!collapsed && (
+        <>
+          <div className="output-content">
+            {output ||
+              "Generated premium AI prompt output will appear here after generation."}
+          </div>
+
+          <div className="workspace-actions output-copy">
+            <button
+              className="generate-btn"
+              onClick={
+                copyOutput
+              }
+            >
+              <Copy size={18} />
+              Copy Output
+            </button>
+          </div>
+        </>
+      )}
     </aside>
   );
 }
