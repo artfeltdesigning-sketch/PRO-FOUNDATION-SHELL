@@ -4,13 +4,16 @@ import { ThemeProvider } from "next-themes";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-ui"
+  variable: "--font-inter"
 });
 
 export const metadata = {
   title: "CTPRO.ai",
   description:
-    "AI Creative Production OS"
+    "AI Creative Production OS",
+  icons: {
+    icon: "/favicon.ico"
+  }
 };
 
 export default function RootLayout({
