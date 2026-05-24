@@ -1,5 +1,3 @@
-// components/sidebar.tsx
-
 "use client";
 
 import {
@@ -32,68 +30,121 @@ export default function Sidebar({
   return (
     <aside
       className={`sidebar-shell glass ${
-        collapsed
-          ? "collapsed"
-          : ""
+        collapsed ? "collapsed" : ""
       }`}
     >
-      <div className="brand-row">
-        <div className="brand-icon">
-          CT
-        </div>
-
-        <div className="brand-copy">
-          <div className="brand-title">
-            CTPRO.ai
+      {/* MOBILE TOP NAV */}
+      <div className="mobile-top-nav">
+        <div className="mobile-brand">
+          <div className="brand-icon">
+            CT
           </div>
 
-          <div className="brand-sub">
-            AI Creative
-            Production OS
+          <div className="mobile-brand-copy">
+            <div className="brand-title">
+              CTPRO.ai
+            </div>
           </div>
+        </div>
+
+        <div className="mobile-mode-toggle">
+          <button
+            className={
+              mode === "image"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              setMode("image")
+            }
+          >
+            <ImageIcon size={18} />
+            Image
+          </button>
+
+          <button
+            className={
+              mode === "motion"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              setMode("motion")
+            }
+          >
+            <Clapperboard size={18} />
+            Motion
+          </button>
+        </div>
+
+        <div className="mobile-actions">
+          <ThemeToggle />
+
+          <button
+            className="mobile-output-btn"
+            onClick={onOpenOutput}
+          >
+            <PanelRightOpen size={18} />
+          </button>
         </div>
       </div>
 
-      <div className="nav-list">
-        <button
-          className={`nav-item ${
-            mode === "image"
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            setMode("image")
-          }
-        >
-          <ImageIcon />
-          <span>Image</span>
-        </button>
+      {/* DESKTOP SIDEBAR */}
+      <div className="desktop-sidebar">
+        <div className="brand-row">
+          <div className="brand-icon">
+            CT
+          </div>
 
-        <button
-          className={`nav-item ${
-            mode === "motion"
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            setMode("motion")
-          }
-        >
-          <Clapperboard />
-          <span>Motion</span>
-        </button>
+          <div className="brand-copy">
+            <div className="brand-title">
+              CTPRO.ai
+            </div>
+
+            <div className="brand-sub">
+              AI Creative Production OS
+            </div>
+          </div>
+        </div>
+
+        <div className="nav-list">
+          <button
+            className={`nav-item ${
+              mode === "image"
+                ? "active"
+                : ""
+            }`}
+            onClick={() =>
+              setMode("image")
+            }
+          >
+            <ImageIcon />
+            <span>
+              Image Studio
+            </span>
+          </button>
+
+          <button
+            className={`nav-item ${
+              mode === "motion"
+                ? "active"
+                : ""
+            }`}
+            onClick={() =>
+              setMode("motion")
+            }
+          >
+            <Clapperboard />
+            <span>
+              Motion Studio
+            </span>
+          </button>
+        </div>
+
+        <div className="theme-block">
+          <ThemeToggle />
+        </div>
       </div>
-
-      <div className="theme-block">
-        <ThemeToggle />
-      </div>
-
-      <button
-        className="mobile-output-btn"
-        onClick={onOpenOutput}
-      >
-        <PanelRightOpen />
-      </button>
     </aside>
   );
 }
