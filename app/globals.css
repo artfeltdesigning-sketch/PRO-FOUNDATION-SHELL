@@ -751,4 +751,59 @@ button {
     align-items: center;
     justify-content: center;
   }
+
+  .mobile-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.mobile-brand-copy .brand-title {
+  font-size: 18px;
+}
+
+.mobile-brand .brand-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  font-size: 18px;
+}
+
+.mobile-mode-toggle {
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.mobile-mode-toggle button {
+  padding: 10px 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.theme-toggle,
+.mobile-output-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+}
+  
 }
