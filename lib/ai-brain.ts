@@ -5,122 +5,150 @@ type DecodeInput = {
   lut: string;
   lighting: string;
   camera: string;
-  chips: string[];
+  environment: string;
   hasReference: boolean;
 };
 
-function cleanInput(text: string) {
-  return text.trim();
-}
-
-function buildEnvironment(
-  chips: string[]
+function normalizePrompt(
+  input: string
 ) {
-  if (!chips.length)
-    return "premium cinematic environment";
+  const cleaned =
+    input
+      .replace(/muhje/gi, "I want")
+      .replace(/muje/gi, "I want")
+      .replace(/chaiye/gi, "need")
+      .replace(/chahiye/gi, "need")
+      .replace(/ek/gi, "a")
+      .replace(/women/gi, "beautiful woman")
+      .replace(/ladki/gi, "beautiful woman")
+      .replace(/aadmi/gi, "man")
+      .replace(/ghar/gi, "luxury home")
+      .replace(/villa/gi, "luxury villa")
+      .replace(/building/gi, "premium architecture")
+      .replace(/balcony/gi, "luxury balcony")
+      .replace(/coffee/gi, "coffee cup")
+      .trim();
 
-  return chips.join(", ");
+  return cleaned;
 }
 
-export function decodeInstruction({
-  userInput,
-  mode,
-  style,
-  lut,
-  lighting,
-  camera,
-  chips,
-  hasReference
-}: DecodeInput) {
-  const prompt =
-    cleanInput(userInput);
+function imageOutput(
+  input: DecodeInput
+) {
+  const subject =
+    normalizePrompt(
+      input.userInput
+    );
 
-  if (!prompt) {
+  return `
+FINAL READY IMAGE PROMPT
+
+AI Creative Director Intelligence
+
+User intent has been professionally interpreted and converted into premium English cinematic production language.
+
+Subject
+Create a premium ultra realistic scene featuring ${subject}.
+
+Creative Style
+${input.style}
+
+Camera
+${input.camera}
+
+Lighting
+${input.lighting}
+
+Color Grading / LUT
+${input.lut}
+
+Environment Engine
+${input.environment}
+
+Reference
+${
+  input.hasReference
+    ? "Reference image attached. Preserve composition inspiration while enhancing cinematic quality."
+    : "No reference reference attached."
+}
+
+Final Production Direction
+Create an ultra realistic cinematic still image with premium composition, realistic textures, luxury commercial quality, natural realism, production-grade visual storytelling, high-end professional image aesthetics, zero cheap AI artifacts.
+`;
+}
+
+function motionOutput(
+  input: DecodeInput
+) {
+  const subject =
+    normalizePrompt(
+      input.userInput
+    );
+
+  return `
+FINAL READY MOTION PROMPT
+
+AI Creative Director Intelligence
+
+User motion intent has been professionally interpreted into cinematic English production language.
+
+Subject
+Create a premium cinematic motion sequence featuring ${subject}.
+
+Creative Style
+${input.style}
+
+Motion Camera Direction
+${input.camera}
+
+Lighting
+${input.lighting}
+
+Color Grading / LUT
+${input.lut}
+
+Environment Engine
+${input.environment}
+
+Reference
+${
+  input.hasReference
+    ? "Reference image attached for motion inspiration."
+    : "No reference attached."
+}
+
+Motion Direction
+Buttery smooth cinematic motion
+Natural acceleration and deceleration
+Professional gimbal quality movement
+Luxury commercial pacing
+Realistic motion physics
+Natural cinematic motion blur
+Premium scene choreography
+Production-grade motion realism
+
+Final Production Direction
+Create an ultra realistic premium cinematic motion sequence with blockbuster realism, smooth camera choreography, realistic physics, luxury film-grade storytelling, zero cheap AI artifacts.
+`;
+}
+
+export function decodeInstruction(
+  input: DecodeInput
+) {
+  if (
+    !input.userInput.trim()
+  ) {
     return "Please enter a creative brief.";
   }
 
-  const environment =
-    buildEnvironment(chips);
-
-  if (mode === "image") {
-    return `
-FINAL READY IMAGE PROMPT:
-
-AI CREATIVE DIRECTOR INTELLIGENCE:
-User intent has been professionally interpreted and transformed into premium English production language.
-
-SUBJECT:
-${prompt}
-
-STYLE:
-${style}
-
-CAMERA:
-${camera}
-
-LIGHTING:
-${lighting}
-
-COLOR GRADING / LUT:
-${lut}
-
-ENVIRONMENT:
-${environment}
-
-REFERENCE:
-${
-  hasReference
-    ? "Reference image attached. Preserve composition inspiration while enhancing professionally."
-    : "No reference image attached."
-}
-
-FINAL OUTPUT:
-Create an ultra realistic premium cinematic still image with production-grade composition, realistic textures, professional lighting, blockbuster visual storytelling, premium commercial quality, zero cheap AI artifacts, hyper detailed realism.
-`;
+  if (
+    input.mode ===
+    "motion"
+  ) {
+    return motionOutput(
+      input
+    );
   }
 
-  return `
-FINAL READY MOTION PROMPT:
-
-AI CREATIVE DIRECTOR INTELLIGENCE:
-User motion intent has been professionally decoded into premium English cinematic production language.
-
-SUBJECT:
-${prompt}
-
-STYLE:
-${style}
-
-CAMERA MOVEMENT:
-${camera}
-
-LIGHTING:
-${lighting}
-
-COLOR GRADING / LUT:
-${lut}
-
-ENVIRONMENT:
-${environment}
-
-REFERENCE:
-${
-  hasReference
-    ? "Reference image attached. Use it as visual motion inspiration."
-    : "No reference image attached."
-}
-
-MOTION DIRECTIVES:
-buttery smooth cinematic motion,
-realistic movement physics,
-natural acceleration and deceleration,
-high-end commercial motion pacing,
-stable professional camera choreography,
-realistic cinematic motion blur,
-human natural body mechanics,
-premium cinematic scene transitions
-
-FINAL OUTPUT:
-Create an ultra realistic premium cinematic motion sequence with blockbuster realism, realistic motion physics, commercial film quality, cinematic storytelling, zero cheap AI artifacts.
-`;
+  return imageOutput(input);
 }
