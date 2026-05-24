@@ -1,9 +1,11 @@
+// components/sidebar.tsx
+
 "use client";
 
 import {
-  Sparkles,
   ImageIcon,
-  Clapperboard
+  Clapperboard,
+  PanelRightOpen
 } from "lucide-react";
 
 import ThemeToggle from "./theme-toggle";
@@ -17,13 +19,15 @@ type Props = {
   setMode: (
     mode: "image" | "motion"
   ) => void;
+  onOpenOutput: () => void;
 };
 
 export default function Sidebar({
   collapsed,
   setCollapsed,
   mode,
-  setMode
+  setMode,
+  onOpenOutput
 }: Props) {
   return (
     <aside
@@ -33,32 +37,21 @@ export default function Sidebar({
           : ""
       }`}
     >
-      <div
-        className="edge-toggle edge-left"
-        onClick={() =>
-          setCollapsed(
-            !collapsed
-          )
-        }
-      />
-
       <div className="brand-row">
         <div className="brand-icon">
           CT
         </div>
 
-        {!collapsed && (
-          <div className="brand-copy">
-            <div className="brand-title">
-              CTPRO.ai
-            </div>
-
-            <div className="brand-sub">
-              AI Creative
-              Production OS
-            </div>
+        <div className="brand-copy">
+          <div className="brand-title">
+            CTPRO.ai
           </div>
-        )}
+
+          <div className="brand-sub">
+            AI Creative
+            Production OS
+          </div>
+        </div>
       </div>
 
       <div className="nav-list">
@@ -72,28 +65,8 @@ export default function Sidebar({
             setMode("image")
           }
         >
-          <Sparkles />
-          {!collapsed && (
-            <span>AI Brain</span>
-          )}
-        </button>
-
-        <button
-          className={`nav-item ${
-            mode === "image"
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            setMode("image")
-          }
-        >
           <ImageIcon />
-          {!collapsed && (
-            <span>
-              Image Studio
-            </span>
-          )}
+          <span>Image</span>
         </button>
 
         <button
@@ -107,17 +80,20 @@ export default function Sidebar({
           }
         >
           <Clapperboard />
-          {!collapsed && (
-            <span>
-              Motion Studio
-            </span>
-          )}
+          <span>Motion</span>
         </button>
       </div>
 
       <div className="theme-block">
         <ThemeToggle />
       </div>
+
+      <button
+        className="mobile-output-btn"
+        onClick={onOpenOutput}
+      >
+        <PanelRightOpen />
+      </button>
     </aside>
   );
 }
