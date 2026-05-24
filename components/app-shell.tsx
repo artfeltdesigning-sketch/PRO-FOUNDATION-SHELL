@@ -1,8 +1,8 @@
 "use client";
 
-import Sidebar from "./Sidebar";
-import PromptWorkspace from "./PromptWorkspace";
-import ResultPanel from "./ResultPanel";
+import Sidebar from "./sidebar";
+import PromptWorkspace from "./prompt-workspace";
+import ResultPanel from "./result-panel";
 
 export default function AppShell() {
   return (
