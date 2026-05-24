@@ -66,37 +66,44 @@ export default function Dropdown({
         position: "relative"
       }}
     >
-      <label
+      <div
         style={{
-          display: "block",
-          marginBottom: 10,
           fontSize: 13,
           fontWeight: 600,
           color:
-            "var(--text-secondary)"
+            "var(--muted)",
+          marginBottom: 10
         }}
       >
         {label}
-      </label>
+      </div>
 
       <button
         type="button"
-        className="premium-select"
         onClick={() =>
           setOpen(!open)
         }
+        className="glass"
         style={{
           width: "100%",
+          minHeight: 64,
+          padding:
+            "0 18px",
+          border: "none",
           display: "flex",
+          alignItems:
+            "center",
           justifyContent:
             "space-between",
-          alignItems: "center"
+          borderRadius: 22,
+          color:
+            "var(--text)"
         }}
       >
         <span
           style={{
-            fontWeight: 600,
-            fontSize: 15
+            fontSize: 15,
+            fontWeight: 600
           }}
         >
           {value}
@@ -109,7 +116,7 @@ export default function Dropdown({
               ? "rotate(180deg)"
               : "rotate(0deg)",
             transition:
-              "0.2s ease"
+              "0.25s ease"
           }}
         />
       </button>
@@ -120,17 +127,21 @@ export default function Dropdown({
           style={{
             position:
               "absolute",
-            top: "calc(100% + 10px)",
+            top: "calc(100% + 12px)",
             left: 0,
             width: "100%",
-            borderRadius: 20,
+            zIndex: 9999,
             padding: 10,
-            zIndex: 999
+            borderRadius: 24,
+            background:
+              "var(--panel-strong)",
+            boxShadow:
+              "0 20px 60px rgba(124,92,255,0.18)"
           }}
         >
           <div
             style={{
-              maxHeight: 260,
+              maxHeight: 280,
               overflowY:
                 "auto",
               display: "flex",
@@ -140,53 +151,58 @@ export default function Dropdown({
             }}
           >
             {options.map(
-              (option) => (
-                <button
-                  key={option}
-                  type="button"
-                  onClick={() => {
-                    onChange(
-                      option
-                    );
-                    setOpen(
-                      false
-                    );
-                  }}
-                  style={{
-                    height: 50,
-                    border:
-                      "none",
-                    borderRadius: 14,
-                    background:
-                      value ===
-                      option
-                        ? "rgba(124,92,255,0.14)"
-                        : "transparent",
-                    color:
-                      "var(--text)",
-                    display:
-                      "flex",
-                    alignItems:
-                      "center",
-                    justifyContent:
-                      "space-between",
-                    padding:
-                      "0 14px",
-                    fontWeight: 600
-                  }}
-                >
-                  <span>
-                    {option}
-                  </span>
+              (option) => {
+                const active =
+                  option ===
+                  value;
 
-                  {value ===
-                    option && (
-                    <Check
-                      size={16}
-                    />
-                  )}
-                </button>
-              )
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => {
+                      onChange(
+                        option
+                      );
+                      setOpen(
+                        false
+                      );
+                    }}
+                    style={{
+                      minHeight: 52,
+                      border:
+                        "none",
+                      borderRadius: 18,
+                      padding:
+                        "0 16px",
+                      display:
+                        "flex",
+                      alignItems:
+                        "center",
+                      justifyContent:
+                        "space-between",
+                      background:
+                        active
+                          ? "rgba(124,92,255,0.16)"
+                          : "transparent",
+                      color:
+                        "var(--text)",
+                      fontWeight: 600,
+                      fontSize: 14
+                    }}
+                  >
+                    <span>
+                      {option}
+                    </span>
+
+                    {active && (
+                      <Check
+                        size={16}
+                      />
+                    )}
+                  </button>
+                );
+              }
             )}
           </div>
         </div>
