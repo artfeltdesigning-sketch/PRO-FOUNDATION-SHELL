@@ -8,8 +8,7 @@
   --muted: #64748b;
   --accent: #7c5cff;
   --accent2: #38bdf8;
-  --shadow:
-    0 10px 40px rgba(15, 23, 42, 0.08);
+  --shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
   --radius: 28px;
 }
 
@@ -21,8 +20,7 @@
   --border: rgba(255, 255, 255, 0.08);
   --text: #f8fafc;
   --muted: #94a3b8;
-  --shadow:
-    0 18px 60px rgba(0, 0, 0, 0.45);
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -39,42 +37,20 @@ body {
 }
 
 body {
-  font-family: var(--font-ui), sans-serif;
+  font-family: var(--font-primary), sans-serif;
   background:
-    radial-gradient(
-      circle at top left,
-      rgba(124, 92, 255, 0.12),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at top right,
-      rgba(56, 189, 248, 0.08),
-      transparent 30%
-    ),
-    linear-gradient(
-      180deg,
-      var(--bg),
-      var(--bg2)
-    );
+    radial-gradient(circle at top left, rgba(124, 92, 255, 0.12), transparent 35%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.08), transparent 30%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
   color: var(--text);
-  transition:
-    background 0.35s ease,
-    color 0.35s ease;
+  transition: background 0.35s ease, color 0.35s ease;
 }
+
 body,
 button,
 input,
 textarea {
   font-family: var(--font-primary), sans-serif;
-}
-
-.brand-title,
-.workspace-title,
-.landing-hero h1,
-.output-top h2 {
-  font-family: var(--font-primary), sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.04em;
 }
 
 button,
@@ -89,6 +65,15 @@ textarea {
 
 button {
   cursor: pointer;
+}
+
+.brand-title,
+.workspace-title,
+.landing-hero h1,
+.output-top h2 {
+  font-family: var(--font-primary), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
 }
 
 .glass {
@@ -142,20 +127,14 @@ button {
   width: 56px;
   height: 56px;
   border-radius: 20px;
-  background:
-    linear-gradient(
-      135deg,
-      var(--accent),
-      var(--accent2)
-    );
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   font-weight: 700;
   color: white;
-  box-shadow:
-    0 12px 32px rgba(124, 92, 255, 0.28);
+  box-shadow: 0 12px 32px rgba(124, 92, 255, 0.28);
 }
 
 .brand-title {
@@ -177,12 +156,14 @@ button {
   font-weight: 700;
   letter-spacing: -0.05em;
   line-height: 1;
+  white-space: pre-line;
 }
 
 .muted {
   color: var(--muted);
   font-size: 16px;
   font-weight: 500;
+  line-height: 1.5;
 }
 
 .workspace-top,
@@ -200,12 +181,11 @@ button {
 .glass-inner {
   padding: 22px;
   border-radius: 26px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.04),
-      rgba(255, 255, 255, 0.02)
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.02)
+  );
   border: 1px solid var(--border);
 }
 
@@ -242,26 +222,18 @@ button {
 }
 
 .primary-chip {
-  background:
-    rgba(124, 92, 255, 0.14);
+  background: rgba(124, 92, 255, 0.14);
   color: var(--text);
 }
 
 .generate-btn {
-  background:
-    linear-gradient(
-      135deg,
-      var(--accent),
-      var(--accent2)
-    );
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   color: white;
-  box-shadow:
-    0 12px 30px rgba(124, 92, 255, 0.28);
+  box-shadow: 0 12px 30px rgba(124, 92, 255, 0.28);
 }
 
 .secondary-btn {
-  background:
-    rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text);
   border: 1px solid var(--border);
 }
@@ -273,13 +245,13 @@ button {
   flex-wrap: wrap;
 }
 
-.upload-zone {
+.upload-zone,
+.upload-shell {
   margin-top: 24px;
   padding: 22px;
   border-radius: 24px;
   border: 1px dashed var(--border);
-  background:
-    rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.03);
   transition: all 0.25s ease;
 }
 
@@ -304,8 +276,7 @@ button {
 }
 
 .nav-item.active {
-  background:
-    rgba(124, 92, 255, 0.14);
+  background: rgba(124, 92, 255, 0.14);
 }
 
 .nav-item svg {
@@ -317,16 +288,32 @@ button {
   margin-top: auto;
 }
 
+.theme-toggle {
+  width: 58px;
+  height: 58px;
+  border: none;
+  border-radius: 20px;
+  background: var(--panel-strong);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+}
+
+.mobile-output-btn {
+  display: none;
+}
+
 .output-content {
   margin-top: 22px;
   padding: 22px;
   border-radius: 24px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.04),
-      rgba(255, 255, 255, 0.02)
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.02)
+  );
   border: 1px solid var(--border);
   min-height: 420px;
   max-height: 70vh;
@@ -354,143 +341,17 @@ button {
 }
 
 .edge-toggle:hover {
-  background:
-    linear-gradient(
-      180deg,
-      transparent,
-      rgba(124, 92, 255, 0.18),
-      transparent
-    );
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(124, 92, 255, 0.18),
+    transparent
+  );
 }
 
 .sidebar-shell.collapsed {
   width: 92px;
   padding: 16px;
-}
-
-.output-shell.collapsed {
-  width: 72px;
-  overflow: hidden;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background:
-    rgba(124, 92, 255, 0.28);
-  border-radius: 999px;
-}
-
-@media (max-width: 1200px) {
-  .app-shell {
-    grid-template-columns: 92px 1fr 320px;
-  }
-
-  .workspace-title {
-    font-size: 46px;
-  }
-}
-
-@media (max-width: 900px) {
-  .app-shell {
-    grid-template-columns: 1fr;
-    padding: 14px;
-  }
-
-  .sidebar-shell,
-  .workspace-shell,
-  .output-shell {
-    min-height: auto;
-  }
-
-  .sidebar-shell {
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-    padding: 14px;
-  }
-
-  .nav-list {
-    flex-direction: row;
-    margin-top: 0;
-    flex-wrap: wrap;
-  }
-
-  .controls-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .workspace-title {
-    font-size: 36px;
-  }
-
-  .output-content {
-    max-height: 360px;
-  }
-
-  .edge-toggle {
-    display: none;
-  }
-}
-
-@media (max-width: 640px) {
-  .workspace-title {
-    font-size: 30px;
-  }
-
-  .brand-title {
-    font-size: 22px;
-  }
-
-  .workspace-actions {
-    flex-direction: column;
-  }
-
-  .generate-btn,
-  .secondary-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .prompt-command textarea {
-    min-height: 160px;
-    font-size: 17px;
-  }
-}
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes brandReveal {
-  from {
-    opacity: 0;
-    transform: translateX(-12px) scale(0.96);
-    filter: blur(6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    filter: blur(0);
-  }
-}
-
-.brand-copy {
-  animation: brandReveal 0.55s ease;
 }
 
 .sidebar-shell.collapsed .brand-copy {
@@ -518,17 +379,10 @@ button {
 .sidebar-shell.collapsed .brand-icon {
   margin: 0 auto;
 }
-.theme-toggle {
-  width: 58px;
-  height: 58px;
-  border: none;
-  border-radius: 20px;
-  background: var(--panel-strong);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow);
+
+.output-shell.collapsed {
+  width: 72px;
+  overflow: hidden;
 }
 
 .dropdown-shell {
@@ -566,8 +420,7 @@ button {
   padding: 10px;
   background: var(--panel-strong);
   border: 1px solid var(--border);
-  box-shadow:
-    0 20px 60px rgba(124,92,255,0.18);
+  box-shadow: 0 20px 60px rgba(124, 92, 255, 0.18);
   backdrop-filter: blur(24px);
 }
 
@@ -593,20 +446,12 @@ button {
 }
 
 .dropdown-option.active {
-  background: rgba(124,92,255,0.16);
-}
-
-.upload-shell {
-  margin-top: 24px;
-  padding: 22px;
-  border-radius: 24px;
-  border: 1px dashed var(--border);
-  background: rgba(255,255,255,0.03);
+  background: rgba(124, 92, 255, 0.16);
 }
 
 .upload-shell.dragging {
-  border-color: rgba(124,92,255,0.45);
-  background: rgba(124,92,255,0.08);
+  border-color: rgba(124, 92, 255, 0.45);
+  background: rgba(124, 92, 255, 0.08);
 }
 
 .upload-inner,
@@ -622,7 +467,7 @@ button {
   width: 58px;
   height: 58px;
   border-radius: 20px;
-  background: rgba(124,92,255,0.14);
+  background: rgba(124, 92, 255, 0.14);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -651,6 +496,101 @@ button {
   gap: 8px;
 }
 
+.workspace-copy {
+  min-width: 0;
+}
+
+.workspace-subtitle {
+  margin-top: 14px;
+  max-width: 640px;
+}
+
+.workspace-mode-chip {
+  flex-shrink: 0;
+}
+
+.mobile-top-nav {
+  display: none;
+}
+
+.desktop-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-brand-copy .brand-title {
+  font-size: 20px;
+}
+
+.mobile-mode-toggle {
+  display: flex;
+  gap: 8px;
+  background: rgba(124, 92, 255, 0.08);
+  padding: 6px;
+  border-radius: 18px;
+}
+
+.mobile-mode-toggle button {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.mobile-mode-toggle button.active {
+  background: rgba(124, 92, 255, 0.18);
+}
+
+.mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes brandReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-12px) scale(0.96);
+    filter: blur(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.brand-copy {
+  animation: brandReveal 0.55s ease;
+}
+
+/* LANDING */
+
 .landing-shell {
   min-height: 100vh;
   display: flex;
@@ -669,8 +609,7 @@ button {
   height: 92px;
   border-radius: 30px;
   margin: 0 auto 28px;
-  background:
-    linear-gradient(135deg, var(--accent), var(--accent2));
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -697,130 +636,30 @@ button {
   border: none;
   border-radius: 22px;
   padding: 18px 28px;
-  background:
-    linear-gradient(135deg, var(--accent), var(--accent2));
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   color: white;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
   gap: 10px;
 }
-.mobile-output-btn {
-  display: none;
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-@media (max-width: 900px) {
-  .brand-copy {
-    display: block !important;
-  }
-
-  .sidebar-shell {
-    min-height: auto;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
-  }
-
-  .nav-list {
-    flex-direction: row;
-    margin-top: 0;
-    gap: 8px;
-    flex: 1;
-    justify-content: center;
-  }
-
-  .nav-item {
-    min-width: 52px;
-    padding: 12px 16px;
-    font-size: 14px;
-  }
-
-  .theme-block {
-    margin-top: 0;
-  }
-
-  .mobile-output-btn {
-    display: flex;
-    width: 52px;
-    height: 52px;
-    border: none;
-    border-radius: 18px;
-    background: rgba(124, 92, 255, 0.14);
-    color: var(--text);
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mobile-top-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.mobile-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 92, 255, 0.28);
+  border-radius: 999px;
 }
 
-.mobile-brand-copy .brand-title {
-  font-size: 18px;
-}
-
-.mobile-brand .brand-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  font-size: 18px;
-}
-
-.mobile-mode-toggle {
-  flex-shrink: 0;
-  gap: 6px;
-}
-
-.mobile-mode-toggle button {
-  padding: 10px 12px;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
-.mobile-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.theme-toggle,
-.mobile-output-btn {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-}
-.workspace-copy {
-  min-width: 0;
-}
-
-.workspace-subtitle {
-  margin-top: 14px;
-  max-width: 640px;
-}
-
-.workspace-mode-chip {
-  flex-shrink: 0;
-}
-
-/* =========================
-   RESPONSIVE DESKTOP-STYLE FIX
-========================= */
+/* RESPONSIVE */
 
 @media (max-width: 1200px) {
   .app-shell {
@@ -839,12 +678,10 @@ button {
 
   .sidebar-shell {
     padding: 16px;
-    position: relative;
   }
 
   .brand-row {
     gap: 12px;
-    flex-wrap: nowrap;
   }
 
   .brand-icon {
@@ -857,12 +694,10 @@ button {
 
   .brand-title {
     font-size: 18px;
-    line-height: 1.1;
   }
 
   .brand-sub {
     font-size: 13px;
-    margin-top: 4px;
   }
 
   .nav-list {
@@ -905,31 +740,23 @@ button {
   .workspace-title {
     font-size: 40px;
     line-height: 1.05;
-    word-break: break-word;
   }
 
   .workspace-subtitle,
   .muted {
     max-width: 100%;
     font-size: 15px;
-    line-height: 1.5;
   }
 
   .workspace-mode-chip,
   .primary-chip {
     width: 100%;
     justify-content: center;
-    padding: 14px 18px;
-  }
-
-  .glass-inner.prompt-command {
-    padding: 16px;
   }
 
   .prompt-command textarea {
     min-height: 180px;
     font-size: 16px;
-    line-height: 1.6;
   }
 
   .controls-grid {
@@ -940,60 +767,21 @@ button {
   .dropdown-trigger {
     min-height: 56px;
     border-radius: 18px;
-    font-size: 15px;
-  }
-
-  .upload-shell,
-  .upload-zone {
-    padding: 16px;
-  }
-
-  .upload-inner,
-  .upload-file {
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   .workspace-actions {
     flex-direction: column;
-    gap: 12px;
   }
 
   .generate-btn,
   .secondary-btn {
     width: 100%;
     justify-content: center;
-    min-height: 54px;
-  }
-
-  .output-shell {
-    padding: 18px;
-  }
-
-  .output-top {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
   }
 
   .output-content {
     min-height: 260px;
     max-height: 420px;
-    font-size: 15px;
-    line-height: 1.7;
-  }
-
-  .mobile-top-nav {
-    display: none !important;
-  }
-
-  .desktop-sidebar {
-    display: flex !important;
-    flex-direction: column;
-  }
-
-  .mobile-output-btn {
-    display: none !important;
   }
 }
 
@@ -1001,12 +789,6 @@ button {
   .app-shell {
     padding: 10px;
     gap: 10px;
-  }
-
-  .sidebar-shell,
-  .workspace-shell,
-  .output-shell {
-    border-radius: 22px;
   }
 
   .workspace-title {
@@ -1045,7 +827,4 @@ button {
     min-height: 220px;
     max-height: 320px;
   }
-}
-}
-
 }
