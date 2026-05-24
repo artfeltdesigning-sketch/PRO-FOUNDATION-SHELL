@@ -1,87 +1,181 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --bg: #f7f8fb;
-  --panel: rgba(255, 255, 255, 0.58);
-  --panel-border: rgba(255, 255, 255, 0.48);
-  --text: #111827;
-  --muted: #6b7280;
-  --accent: #7c5cff;
-  --accent2: #4da6ff;
+.brand {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
-.dark {
-  --bg: #070b14;
-  --panel: rgba(17, 24, 39, 0.48);
-  --panel-border: rgba(255, 255, 255, 0.08);
-  --text: #ffffff;
-  --muted: rgba(255,255,255,0.58);
-  --accent: #8b7dff;
-  --accent2: #63b3ff;
+.muted {
+  color: var(--muted);
 }
 
-* {
-  box-sizing: border-box;
+.sidebar-top,
+.workspace-top,
+.output-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
 }
 
-body {
-  background:
-    radial-gradient(circle at top right, rgba(124,92,255,0.12), transparent 30%),
-    radial-gradient(circle at bottom left, rgba(77,166,255,0.10), transparent 30%),
-    var(--bg);
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: none;
+  background: transparent;
   color: var(--text);
-  transition: all 0.35s ease;
+  cursor: pointer;
 }
 
-button,
-input,
-textarea,
-select {
-  font-family: inherit;
+.nav-item.active {
+  background: rgba(124,92,255,0.14);
 }
 
-.app-shell {
-  display: grid;
-  grid-template-columns: 290px 1fr 420px;
-  gap: 24px;
-  min-height: 100vh;
-  padding: 24px;
-}
-
-.glass {
-  background: var(--panel);
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
   border: 1px solid var(--panel-border);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  box-shadow:
-    0 10px 50px rgba(0,0,0,0.14),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  border-radius: 28px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
 }
 
-.sidebar-shell {
-  padding: 24px;
+.theme-block {
+  margin-top: auto;
 }
 
-.workspace-shell {
-  padding: 28px;
+.workspace-title {
+  font-size: 30px;
+  font-weight: 800;
 }
 
-.output-shell {
-  padding: 24px;
+.glass-inner {
+  margin-top: 24px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.04);
+}
+
+.prompt-command textarea,
+.output-shell textarea {
+  width: 100%;
+  min-height: 180px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  resize: none;
+  outline: none;
+}
+
+.output-shell textarea {
+  min-height: 520px;
+}
+
+.controls-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.premium-select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.tag-chip {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.tag-chip.active {
+  background: rgba(124,92,255,0.16);
+}
+
+.upload-zone {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px dashed var(--panel-border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.workspace-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.generate-btn,
+.secondary-btn,
+.primary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+.generate-btn {
+  background: linear-gradient(
+    135deg,
+    var(--accent),
+    var(--accent2)
+  );
+  color: white;
+}
+
+.secondary-btn {
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+}
+
+.primary-chip {
+  background: rgba(124,92,255,0.14);
+  color: var(--text);
+}
+
+.collapsed {
+  width: 90px;
+}
+
+.mini-output {
+  width: 120px;
 }
 
 @media (max-width: 1450px) {
-  .app-shell {
+  .controls-grid {
     grid-template-columns: 1fr;
   }
 }
