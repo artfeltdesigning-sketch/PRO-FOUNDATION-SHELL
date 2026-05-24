@@ -1,29 +1,72 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
+import {
+  Moon,
+  Sun
+} from "lucide-react";
 import { useTheme } from "next-themes";
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const {
+    theme,
+    setTheme
+  } = useTheme();
+
+  const isDark =
+    theme === "dark";
 
   return (
-    <div className="theme-toggle-wrap">
+    <div
+      className="glass"
+      style={{
+        borderRadius: 20,
+        padding: 8,
+        display: "flex",
+        gap: 8
+      }}
+    >
       <button
-        className={`theme-pill ${
-          theme === "light" ? "active" : ""
-        }`}
-        onClick={() => setTheme("light")}
+        onClick={() =>
+          setTheme("light")
+        }
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 14,
+          border: "none",
+          background:
+            !isDark
+              ? "linear-gradient(135deg, var(--accent), var(--accent-2))"
+              : "transparent",
+          color:
+            !isDark
+              ? "white"
+              : "var(--text)"
+        }}
       >
-        <Sun size={18} />
+        <Sun size={20} />
       </button>
 
       <button
-        className={`theme-pill ${
-          theme === "dark" ? "active" : ""
-        }`}
-        onClick={() => setTheme("dark")}
+        onClick={() =>
+          setTheme("dark")
+        }
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 14,
+          border: "none",
+          background:
+            isDark
+              ? "linear-gradient(135deg, var(--accent), var(--accent-2))"
+              : "transparent",
+          color:
+            isDark
+              ? "white"
+              : "var(--text)"
+        }}
       >
-        <Moon size={18} />
+        <Moon size={20} />
       </button>
     </div>
   );
