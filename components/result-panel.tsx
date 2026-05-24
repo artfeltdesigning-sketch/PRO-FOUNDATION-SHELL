@@ -1,69 +1,47 @@
 "use client";
 
-import { useState } from "react";
 import {
   Copy,
   Download,
-  Minimize2,
-  Maximize2
+  Sparkles
 } from "lucide-react";
 
 export default function ResultPanel() {
-  const [collapsed, setCollapsed] =
-    useState(false);
-
   return (
-    <aside
-      className={`glass output-shell ${
-        collapsed ? "mini-output" : ""
-      }`}
-    >
+    <aside className="glass output-shell">
       <div className="output-top">
         <div>
-          {!collapsed && (
-            <>
-              <h2>AI Output Console</h2>
-              <p className="muted">
-                Production-grade prompt engine
-              </p>
-            </>
-          )}
+          <h2 className="workspace-title" style={{ fontSize: "28px" }}>
+            Creative Intelligence Console
+          </h2>
+
+          <p className="muted">
+            Real-time production-grade AI generation output
+          </p>
         </div>
 
-        <button
-          className="icon-btn"
-          onClick={() =>
-            setCollapsed(!collapsed)
-          }
-        >
-          {collapsed ? (
-            <Maximize2 size={18} />
-          ) : (
-            <Minimize2 size={18} />
-          )}
+        <button className="primary-chip">
+          <Sparkles size={16} />
+          Live Engine
         </button>
       </div>
 
-      {!collapsed && (
-        <>
-          <textarea
-            placeholder="AI cinematic prompt output will appear here..."
-            readOnly
-          />
+      <textarea
+        readOnly
+        placeholder="Structured prompt intelligence will appear here after generation..."
+      />
 
-          <div className="workspace-actions">
-            <button className="secondary-btn">
-              <Copy size={16} />
-              Copy
-            </button>
+      <div className="workspace-actions">
+        <button className="secondary-btn">
+          <Copy size={16} />
+          Copy Output
+        </button>
 
-            <button className="generate-btn">
-              <Download size={16} />
-              Export
-            </button>
-          </div>
-        </>
-      )}
+        <button className="generate-btn">
+          <Download size={16} />
+          Export Output
+        </button>
+      </div>
     </aside>
   );
 }
