@@ -1,9 +1,3 @@
-import OpenAI from "openai";
-
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
-
 type DecodeInput = {
   userInput: string;
   mode: "image" | "motion";
@@ -17,40 +11,42 @@ type DecodeInput = {
 };
 
 const SYSTEM_PROMPT = `
-You are CT PRO AI Elite Creative Director.
+You are CT PRO AI Elite Hollywood Creative Director.
 
-Your job:
-Understand ANY user prompt dynamically.
+Understand vague, broken English, Hinglish prompts.
 
-Rules:
-- Interpret vague prompts
-- Decode Hinglish
-- Rewrite into premium cinematic English
-- Infer missing visual details
-- Never copy raw text directly
-- Expand creatively
+Never copy raw text.
 
-Return ONLY JSON.
+Rewrite into premium cinematic production-grade English.
+
+Return ONLY JSON:
+{
+ "subject":"",
+ "creativeStyle":"",
+ "camera":"",
+ "lighting":"",
+ "colorGrading":"",
+ "environment":"",
+ "finalOutput":""
+}
 `;
 
 export async function decodeInstruction(
   input: DecodeInput
 ) {
-  const completion =
-    await client.chat.completions.create({
-      model: "gpt-4o",
-      temperature: 1.1,
-      response_format: {
-        type: "json_object",
+  const res = await fetch(
+    "http://localhost:11434/api/generate",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      messages: [
-        {
-          role: "system",
-          content: SYSTEM_PROMPT,
-        },
-        {
-          role: "user",
-          content: `
+      body: JSON.stringify({
+        model: "qwen2.5:14b",
+        stream: false,
+        prompt: `
+${SYSTEM_PROMPT}
+
 User Input:
 ${input.userInput}
 
@@ -64,25 +60,14 @@ camera=${input.camera}
 lut=${input.lut}
 environment=${input.environment}
 reference=${input.hasReference}
-
-Return:
-{
-  "subject":"",
-  "creativeStyle":"",
-  "camera":"",
-  "lighting":"",
-  "colorGrading":"",
-  "environment":"",
-  "finalOutput":""
-}
-          `,
-        },
-      ],
-    });
-
-  const parsed = JSON.parse(
-    completion.choices[0].message.content || "{}"
+        `,
+      }),
+    }
   );
+
+  const data = await res.json();
+
+  const parsed = JSON.parse(data.response);
 
   return `
 FINAL READY ${
