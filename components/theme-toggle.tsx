@@ -15,59 +15,38 @@ export default function ThemeToggle() {
   const isDark =
     theme === "dark";
 
+  const toggleTheme =
+    () => {
+      setTheme(
+        isDark
+          ? "light"
+          : "dark"
+      );
+    };
+
   return (
-    <div
+    <button
+      onClick={toggleTheme}
       className="glass"
       style={{
-        borderRadius: 20,
-        padding: 8,
+        width: 58,
+        height: 58,
+        border: "none",
         display: "flex",
-        gap: 8
+        alignItems:
+          "center",
+        justifyContent:
+          "center",
+        borderRadius: 20,
+        color:
+          "var(--text)"
       }}
     >
-      <button
-        onClick={() =>
-          setTheme("light")
-        }
-        style={{
-          width: 48,
-          height: 48,
-          borderRadius: 14,
-          border: "none",
-          background:
-            !isDark
-              ? "linear-gradient(135deg, var(--accent), var(--accent-2))"
-              : "transparent",
-          color:
-            !isDark
-              ? "white"
-              : "var(--text)"
-        }}
-      >
-        <Sun size={20} />
-      </button>
-
-      <button
-        onClick={() =>
-          setTheme("dark")
-        }
-        style={{
-          width: 48,
-          height: 48,
-          borderRadius: 14,
-          border: "none",
-          background:
-            isDark
-              ? "linear-gradient(135deg, var(--accent), var(--accent-2))"
-              : "transparent",
-          color:
-            isDark
-              ? "white"
-              : "var(--text)"
-        }}
-      >
-        <Moon size={20} />
-      </button>
-    </div>
+      {isDark ? (
+        <Sun size={22} />
+      ) : (
+        <Moon size={22} />
+      )}
+    </button>
   );
 }
