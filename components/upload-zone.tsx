@@ -69,7 +69,7 @@ export default function UploadZone({
         cursor: "pointer",
         borderColor:
           dragging
-            ? "rgba(124,92,255,0.45)"
+            ? "rgba(124,92,255,0.35)"
             : undefined,
         background:
           dragging
@@ -81,34 +81,36 @@ export default function UploadZone({
         <div
           style={{
             display: "flex",
+            gap: 18,
             alignItems:
               "center",
-            gap: 18
+            flexWrap: "wrap"
           }}
         >
           <div
             style={{
-              width: 52,
-              height: 52,
-              borderRadius: 18,
+              width: 58,
+              height: 58,
+              borderRadius: 20,
+              background:
+                "rgba(124,92,255,0.14)",
               display: "flex",
               alignItems:
                 "center",
               justifyContent:
                 "center",
-              background:
-                "rgba(124,92,255,0.12)"
+              flexShrink: 0
             }}
           >
             <UploadCloud
-              size={24}
+              size={26}
             />
           </div>
 
           <div>
             <div
               style={{
-                fontSize: 16,
+                fontSize: 17,
                 fontWeight: 700
               }}
             >
@@ -118,13 +120,13 @@ export default function UploadZone({
             <div
               className="muted"
               style={{
-                marginTop: 4
+                marginTop: 6
               }}
             >
               Drag & drop or
-              click to upload
+              tap to upload
               moodboards,
-              screenshots, or
+              screenshots,
               inspiration assets
             </div>
           </div>
@@ -137,7 +139,8 @@ export default function UploadZone({
               "space-between",
             alignItems:
               "center",
-            width: "100%"
+            gap: 14,
+            flexWrap: "wrap"
           }}
         >
           <div>
@@ -153,7 +156,9 @@ export default function UploadZone({
             <div
               className="muted"
               style={{
-                marginTop: 4
+                marginTop: 4,
+                wordBreak:
+                  "break-word"
               }}
             >
               {file.name}
@@ -168,7 +173,7 @@ export default function UploadZone({
               setFile(null);
             }}
             style={{
-              height: 46
+              minHeight: 48
             }}
           >
             <X size={16} />
