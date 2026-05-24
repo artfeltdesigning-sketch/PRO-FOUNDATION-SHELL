@@ -1,7 +1,13 @@
 "use client";
 
-import { Upload, X } from "lucide-react";
-import { useRef } from "react";
+import {
+  UploadCloud,
+  X
+} from "lucide-react";
+import {
+  useRef,
+  useState
+} from "react";
 
 type Props = {
   file: File | null;
@@ -19,6 +25,9 @@ export default function UploadZone({
       null
     );
 
+  const [dragging, setDragging] =
+    useState(false);
+
   const handleFile = (
     selected: File | null
   ) => {
@@ -35,11 +44,20 @@ export default function UploadZone({
   return (
     <div
       className="upload-zone"
-      onDragOver={(e) =>
-        e.preventDefault()
+      onClick={() =>
+        !file &&
+        inputRef.current?.click()
+      }
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={() =>
+        setDragging(false)
       }
       onDrop={(e) => {
         e.preventDefault();
+        setDragging(false);
 
         const dropped =
           e.dataTransfer
@@ -47,11 +65,16 @@ export default function UploadZone({
 
         handleFile(dropped);
       }}
-      onClick={() =>
-        inputRef.current?.click()
-      }
       style={{
-        cursor: "pointer"
+        cursor: "pointer",
+        borderColor:
+          dragging
+            ? "rgba(124,92,255,0.45)"
+            : undefined,
+        background:
+          dragging
+            ? "rgba(124,92,255,0.06)"
+            : undefined
       }}
     >
       {!file ? (
@@ -60,27 +83,50 @@ export default function UploadZone({
             display: "flex",
             alignItems:
               "center",
-            gap: 16
+            gap: 18
           }}
         >
-          <Upload size={24} />
+          <div
+            style={{
+              width: 52,
+              height: 52,
+              borderRadius: 18,
+              display: "flex",
+              alignItems:
+                "center",
+              justifyContent:
+                "center",
+              background:
+                "rgba(124,92,255,0.12)"
+            }}
+          >
+            <UploadCloud
+              size={24}
+            />
+          </div>
 
           <div>
-            <strong
+            <div
               style={{
                 fontSize: 16,
-                fontWeight: 600
+                fontWeight: 700
               }}
             >
               Creative References
-            </strong>
+            </div>
 
-            <p className="muted">
-              Drag & drop or click
-              to upload moodboards,
-              screenshots,
-              brand references
-            </p>
+            <div
+              className="muted"
+              style={{
+                marginTop: 4
+              }}
+            >
+              Drag & drop or
+              click to upload
+              moodboards,
+              screenshots, or
+              inspiration assets
+            </div>
           </div>
         </div>
       ) : (
@@ -95,24 +141,34 @@ export default function UploadZone({
           }}
         >
           <div>
-            <strong
+            <div
               style={{
-                fontSize: 16
+                fontSize: 16,
+                fontWeight: 700
               }}
             >
-              Attached File
-            </strong>
+              Attached Reference
+            </div>
 
-            <p className="muted">
+            <div
+              className="muted"
+              style={{
+                marginTop: 4
+              }}
+            >
               {file.name}
-            </p>
+            </div>
           </div>
 
           <button
+            type="button"
             className="secondary-btn"
             onClick={(e) => {
               e.stopPropagation();
               setFile(null);
+            }}
+            style={{
+              height: 46
             }}
           >
             <X size={16} />
