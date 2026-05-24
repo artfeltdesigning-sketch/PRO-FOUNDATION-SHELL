@@ -705,3 +705,50 @@ button {
   align-items: center;
   gap: 10px;
 }
+.mobile-output-btn {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .brand-copy {
+    display: block !important;
+  }
+
+  .sidebar-shell {
+    min-height: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    margin-top: 0;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-item {
+    min-width: 52px;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .theme-block {
+    margin-top: 0;
+  }
+
+  .mobile-output-btn {
+    display: flex;
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 18px;
+    background: rgba(124, 92, 255, 0.14);
+    color: var(--text);
+    align-items: center;
+    justify-content: center;
+  }
+}
