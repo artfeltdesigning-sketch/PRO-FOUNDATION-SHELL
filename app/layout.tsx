@@ -1,10 +1,10 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-inter"
+  variable: "--font-primary"
 });
 
 export const metadata = {
@@ -28,7 +28,7 @@ export default function RootLayout({
     >
       <body
         className={
-          inter.variable
+          jakarta.variable
         }
       >
         <ThemeProvider
