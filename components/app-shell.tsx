@@ -1,8 +1,8 @@
 "use client";
 
-import Sidebar from "./sidebar";
+import Sidebar from "./Sidebar";
 import Topbar from "./topbar";
-import PromptWorkspace from "./prompt-workspace";
+import PromptWorkspace from "./PromptWorkspace";
 import ResultConsole from "./result-console";
 
 export default function AppShell() {
@@ -10,10 +10,10 @@ export default function AppShell() {
     <main className="app-shell">
       <Sidebar />
 
-      <section className="main-stack">
+      <div className="main-stack">
         <Topbar />
         <PromptWorkspace />
-      </section>
+      </div>
 
       <ResultConsole />
     </main>
