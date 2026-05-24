@@ -3,96 +3,174 @@
 import { useState } from "react";
 import {
   Sparkles,
-  Wand2,
-  Upload,
-  ChevronDown
+  Wand2
 } from "lucide-react";
+
+import Dropdown from "./dropdown";
+import UploadZone from "./upload-zone";
 import { decodeInstruction } from "../lib/ai-brain";
 
 type Props = {
-  onGenerate?: (output: string) => void;
+  mode: "image" | "motion";
+  onGenerate: (
+    output: string
+  ) => void;
+  onReset: () => void;
 };
 
+const creativeStyles = [
+  "Ultra Realistic Cinematic",
+  "Luxury Commercial",
+  "Architectural Editorial",
+  "Hollywood Blockbuster",
+  "Netflix Prestige",
+  "Fashion Editorial",
+  "Apple Commercial"
+];
+
+const luts = [
+  "Netflix Contrast",
+  "Hollywood Blockbuster",
+  "Apple Commercial",
+  "Luxury Real Estate",
+  "Kodak Film",
+  "Teal Orange",
+  "Dune LUT",
+  "Blade Runner LUT"
+];
+
+const lightingOptions = [
+  "Golden Hour Cinematic",
+  "Soft Natural Daylight",
+  "Netflix Moody",
+  "Blue Hour",
+  "Sunset Orange",
+  "Luxury Interior Warm",
+  "Overcast Editorial",
+  "Night Neon",
+  "Volumetric God Rays"
+];
+
+const cameraOptions = [
+  "Hero Shot",
+  "Close Up",
+  "Extreme Close Up",
+  "Low Angle",
+  "High Angle",
+  "Wide Shot",
+  "Ultra Wide",
+  "Architectural Perspective",
+  "Drone Top View",
+  "Cinematic Orbit"
+];
+
+const chipItems = [
+  "Cloud Atmosphere",
+  "Rain FX",
+  "Fog Layer",
+  "Smoke FX",
+  "Luxury Interior",
+  "Modern Exterior"
+];
+
 export default function PromptWorkspace({
-  onGenerate
+  mode,
+  onGenerate,
+  onReset
 }: Props) {
-  const [prompt, setPrompt] = useState("");
-  const [engine, setEngine] =
-    useState("Image AI Engine");
+  const [prompt, setPrompt] =
+    useState("");
+
+  const [style, setStyle] =
+    useState(
+      "Ultra Realistic Cinematic"
+    );
+
   const [lut, setLut] =
-    useState("Hollywood Blockbuster LUT");
+    useState(
+      "Hollywood Blockbuster"
+    );
+
   const [lighting, setLighting] =
-    useState("Cinematic Lighting System");
+    useState(
+      "Golden Hour Cinematic"
+    );
+
   const [camera, setCamera] =
-    useState("Camera Direction Engine");
+    useState("Hero Shot");
 
-  const [selectedChips, setSelectedChips] =
-    useState<string[]>(["Cloud Atmosphere"]);
+  const [file, setFile] =
+    useState<File | null>(null);
 
-  const toggleChip = (chip: string) => {
-    setSelectedChips((prev) =>
+  const [chips, setChips] =
+    useState<string[]>([]);
+
+  const toggleChip = (
+    chip: string
+  ) => {
+    setChips((prev) =>
       prev.includes(chip)
-        ? prev.filter((c) => c !== chip)
+        ? prev.filter(
+            (x) => x !== chip
+          )
         : [...prev, chip]
     );
   };
 
-  const generateOutput = () => {
-    const aiOutput = decodeInstruction(
-      `
-PROMPT:
-${prompt}
-
-ENGINE:
-${engine}
-
-LOOK:
-${lut}
-
-LIGHTING:
-${lighting}
-
-CAMERA:
-${camera}
-
-ENVIRONMENT:
-${selectedChips.join(", ")}
-`
-    );
-
-    onGenerate?.(aiOutput);
-  };
-
-  const resetAll = () => {
+  const handleReset = () => {
     setPrompt("");
-    setSelectedChips(["Cloud Atmosphere"]);
+    setStyle(
+      "Ultra Realistic Cinematic"
+    );
+    setLut(
+      "Hollywood Blockbuster"
+    );
+    setLighting(
+      "Golden Hour Cinematic"
+    );
+    setCamera("Hero Shot");
+    setFile(null);
+    setChips([]);
+    onReset();
   };
 
-  const chips = [
-    "Cloud Atmosphere",
-    "Rain FX",
-    "Fog Layer",
-    "Smoke FX",
-    "Luxury Interior",
-    "Modern Exterior"
-  ];
+  const handleGenerate = () => {
+    const output =
+      decodeInstruction({
+        userInput: prompt,
+        mode,
+        style,
+        lut,
+        lighting,
+        camera,
+        chips,
+        hasReference: !!file
+      });
+
+    onGenerate(output);
+  };
 
   return (
     <section className="glass workspace-shell">
       <div className="workspace-top">
         <div>
           <h2 className="workspace-title">
-            Creative Director Command Center
+            Creative Director
+            Command Center
           </h2>
 
           <p className="muted">
-            Transform creative intent into production-grade AI direction
+            Transform raw ideas
+            into premium AI
+            production output
           </p>
         </div>
 
         <button className="primary-chip">
           <Sparkles size={16} />
-          Creative Intelligence Active
+          {mode === "image"
+            ? "Image Mode"
+            : "Motion Mode"}
         </button>
       </div>
 
@@ -100,40 +178,50 @@ ${selectedChips.join(", ")}
         <textarea
           value={prompt}
           onChange={(e) =>
-            setPrompt(e.target.value)
+            setPrompt(
+              e.target.value
+            )
           }
-          placeholder="Enter your creative brief, campaign objective, visual direction, or multilingual production intent..."
+          placeholder="Describe your idea in Hindi, Gujarati, English, or mixed language..."
         />
       </div>
 
       <div className="controls-grid">
-        <button className="premium-select">
-          <span>{engine}</span>
-          <ChevronDown size={16} />
-        </button>
+        <Dropdown
+          label="Creative Style"
+          value={style}
+          options={creativeStyles}
+          onChange={setStyle}
+        />
 
-        <button className="premium-select">
-          <span>{lut}</span>
-          <ChevronDown size={16} />
-        </button>
+        <Dropdown
+          label="LUT"
+          value={lut}
+          options={luts}
+          onChange={setLut}
+        />
 
-        <button className="premium-select">
-          <span>{lighting}</span>
-          <ChevronDown size={16} />
-        </button>
+        <Dropdown
+          label="Lighting"
+          value={lighting}
+          options={lightingOptions}
+          onChange={setLighting}
+        />
 
-        <button className="premium-select">
-          <span>{camera}</span>
-          <ChevronDown size={16} />
-        </button>
+        <Dropdown
+          label="Camera"
+          value={camera}
+          options={cameraOptions}
+          onChange={setCamera}
+        />
       </div>
 
       <div className="chips-row">
-        {chips.map((chip) => (
+        {chipItems.map((chip) => (
           <button
             key={chip}
             className={`tag-chip ${
-              selectedChips.includes(chip)
+              chips.includes(chip)
                 ? "active"
                 : ""
             }`}
@@ -146,31 +234,22 @@ ${selectedChips.join(", ")}
         ))}
       </div>
 
-      <div className="upload-zone">
-        <Upload size={20} />
-
-        <div>
-          <strong>
-            Creative References
-          </strong>
-
-          <p className="muted">
-            Drop moodboards, visuals, screenshots, or brand references
-          </p>
-        </div>
-      </div>
+      <UploadZone
+        file={file}
+        setFile={setFile}
+      />
 
       <div className="workspace-actions">
         <button
           className="secondary-btn"
-          onClick={resetAll}
+          onClick={handleReset}
         >
           Reset Workspace
         </button>
 
         <button
           className="generate-btn"
-          onClick={generateOutput}
+          onClick={handleGenerate}
         >
           <Wand2 size={18} />
           Generate Creative Intelligence
