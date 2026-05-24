@@ -90,6 +90,25 @@ const environments = [
   "Night City Glow"
 ];
 
+const imageRatios = [
+  "1:1",
+  "4:5",
+  "3:4",
+  "16:9",
+  "9:16",
+  "21:9",
+  "2:3",
+  "3:2"
+];
+
+const motionRatios = [
+  "16:9",
+  "9:16",
+  "1:1",
+  "21:9",
+  "4:5"
+];
+
 export default function PromptWorkspace({
   mode,
   onGenerate
@@ -120,6 +139,11 @@ export default function PromptWorkspace({
       environments[0]
     );
 
+  const [ratio, setRatio] =
+    useState(
+      imageRatios[0]
+    );
+
   const [file, setFile] =
     useState<File | null>(null);
 
@@ -128,9 +152,15 @@ export default function PromptWorkspace({
       setCamera(
         motionCameras[0]
       );
+      setRatio(
+        motionRatios[0]
+      );
     } else {
       setCamera(
         imageCameras[0]
+      );
+      setRatio(
+        imageRatios[0]
       );
     }
   }, [mode]);
@@ -145,6 +175,7 @@ export default function PromptWorkspace({
         lighting,
         camera,
         environment,
+        ratio,
         hasReference:
           !!file
       });
@@ -170,9 +201,15 @@ export default function PromptWorkspace({
       setCamera(
         motionCameras[0]
       );
+      setRatio(
+        motionRatios[0]
+      );
     } else {
       setCamera(
         imageCameras[0]
+      );
+      setRatio(
+        imageRatios[0]
       );
     }
 
@@ -184,8 +221,13 @@ export default function PromptWorkspace({
       ? motionCameras
       : imageCameras;
 
+  const ratioOptions =
+    mode === "motion"
+      ? motionRatios
+      : imageRatios;
+
   return (
-    <section className="glass workspace-shell">
+    <section className="workspace-shell glass">
       <div className="workspace-top">
         <div>
           <div className="workspace-title">
@@ -279,6 +321,15 @@ export default function PromptWorkspace({
             setEnvironment
           }
         />
+
+        <Dropdown
+          label="Aspect Ratio"
+          value={ratio}
+          options={
+            ratioOptions
+          }
+          onChange={setRatio}
+        />
       </div>
 
       <UploadZone
@@ -303,8 +354,7 @@ export default function PromptWorkspace({
           }
         >
           <Wand2 size={18} />
-          Generate Creative
-          Intelligence
+          Generate Creative Intelligence
         </button>
       </div>
     </section>
