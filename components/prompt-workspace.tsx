@@ -123,20 +123,69 @@ export default function PromptWorkspace({
   }, [mode]);
 
   async function handleGenerate() {
-    const result = await decodeInstruction({
+  if (!prompt.trim()) return;
+
+  const res = await fetch("/api/brain", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
       userInput: prompt,
       mode,
       style,
-      lut,
-      lighting,
       camera,
+      lighting,
+      lut,
       environment,
-      ratio,
-      hasReference: !!file
-    });
+      hasReference: !!file,
+    }),
+  });
 
-    onGenerate(result);
+  const data = await res.json();
+
+  if (data.error) {
+    alert("AI Brain failed");
+    return;
   }
+
+  const finalPrompt = `
+FINAL READY ${mode === "motion" ? "MOTION" : "IMAGE"} PROMPT
+
+AI CREATIVE DIRECTOR INTELLIGENCE
+
+User intent has been professionally interpreted into premium cinematic English production language.
+
+SUBJECT
+${data.subject}
+
+CREATIVE STYLE
+${data.creativeStyle}
+
+${mode === "motion" ? "MOTION CAMERA" : "CAMERA"}
+${data.camera}
+
+LIGHTING
+${data.lighting}
+
+COLOR GRADING / LUT
+${data.colorGrading}
+
+ENVIRONMENT ENGINE
+${data.environment}
+
+ASPECT RATIO
+${ratio}
+
+REFERENCE
+${file ? "Reference image attached." : "No reference attached."}
+
+FINAL OUTPUT
+${data.finalOutput}
+`;
+
+  onGenerate(finalPrompt);
+}
 
   function handleReset() {
     setPrompt("");
