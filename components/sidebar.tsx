@@ -1,41 +1,46 @@
 "use client";
 
-import { useState } from "react";
 import {
   Sparkles,
   ImageIcon,
-  Clapperboard,
-  Camera
+  Clapperboard
 } from "lucide-react";
+
 import ThemeToggle from "./theme-toggle";
 
-export default function Sidebar() {
-  const [collapsed, setCollapsed] =
-    useState(false);
+type Props = {
+  collapsed: boolean;
+  setCollapsed: (value: boolean) => void;
+  mode: "image" | "motion";
+  setMode: (mode: "image" | "motion") => void;
+};
 
+export default function Sidebar({
+  collapsed,
+  setCollapsed,
+  mode,
+  setMode
+}: Props) {
   return (
     <aside
       className={`glass sidebar-shell ${
         collapsed ? "collapsed" : ""
       }`}
-      onClick={() =>
-        setCollapsed(!collapsed)
-      }
+      onClick={() => collapsed && setCollapsed(false)}
     >
-      {/* BRAND */}
       <div className="sidebar-top">
-        <div className="brand-wrap">
-          <div className="brand-logo">
-            P
+        <div className="brand-row">
+          <div className="brand-icon">
+            CT
           </div>
 
           {!collapsed && (
             <div className="brand-copy">
-              <h1 className="brand">
-                PROMPTER CT PRO
+              <h1 className="brand-title">
+                CTPRO.ai
               </h1>
 
-              <p className="muted">
+              <p className="brand-sub">
                 AI Creative Production OS
               </p>
             </div>
@@ -43,64 +48,60 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* NAV */}
       <div className="nav-list">
         <button
-          className="nav-item active"
-          onClick={(e) =>
-            e.stopPropagation()
-          }
+          className={`nav-item ${
+            mode === "image"
+              ? "active"
+              : ""
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setMode("image");
+          }}
         >
-          <Sparkles size={22} />
+          <Sparkles />
           {!collapsed && (
             <span>AI Brain</span>
           )}
         </button>
 
         <button
-          className="nav-item"
-          onClick={(e) =>
-            e.stopPropagation()
-          }
+          className={`nav-item ${
+            mode === "image"
+              ? "active"
+              : ""
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setMode("image");
+          }}
         >
-          <ImageIcon size={22} />
+          <ImageIcon />
           {!collapsed && (
             <span>Image Studio</span>
           )}
         </button>
 
         <button
-          className="nav-item"
-          onClick={(e) =>
-            e.stopPropagation()
-          }
+          className={`nav-item ${
+            mode === "motion"
+              ? "active"
+              : ""
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setMode("motion");
+          }}
         >
-          <Clapperboard size={22} />
+          <Clapperboard />
           {!collapsed && (
             <span>Motion Studio</span>
           )}
         </button>
-
-        <button
-          className="nav-item"
-          onClick={(e) =>
-            e.stopPropagation()
-          }
-        >
-          <Camera size={22} />
-          {!collapsed && (
-            <span>Camera Engine</span>
-          )}
-        </button>
       </div>
 
-      {/* THEME */}
-      <div
-        className="theme-block"
-        onClick={(e) =>
-          e.stopPropagation()
-        }
-      >
+      <div className="theme-block">
         <ThemeToggle />
       </div>
     </aside>
