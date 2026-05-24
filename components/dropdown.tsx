@@ -1,6 +1,14 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import {
+  ChevronDown,
+  Check
+} from "lucide-react";
+import {
+  useEffect,
+  useRef,
+  useState
+} from "react";
 
 type Props = {
   label: string;
@@ -17,63 +25,172 @@ export default function Dropdown({
   options,
   onChange
 }: Props) {
+  const [open, setOpen] =
+    useState(false);
+
+  const wrapperRef =
+    useRef<HTMLDivElement>(
+      null
+    );
+
+  useEffect(() => {
+    function handleClick(
+      e: MouseEvent
+    ) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(
+          e.target as Node
+        )
+      ) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener(
+      "mousedown",
+      handleClick
+    );
+
+    return () =>
+      document.removeEventListener(
+        "mousedown",
+        handleClick
+      );
+  }, []);
+
   return (
-    <div>
+    <div
+      ref={wrapperRef}
+      style={{
+        position: "relative"
+      }}
+    >
       <label
         style={{
           display: "block",
-          marginBottom: 8,
+          marginBottom: 10,
           fontSize: 13,
           fontWeight: 600,
-          color: "var(--muted)",
-          letterSpacing: "0.02em"
+          color:
+            "var(--text-secondary)"
         }}
       >
         {label}
       </label>
 
-      <div
+      <button
+        type="button"
+        className="premium-select"
+        onClick={() =>
+          setOpen(!open)
+        }
         style={{
-          position: "relative"
+          width: "100%",
+          display: "flex",
+          justifyContent:
+            "space-between",
+          alignItems: "center"
         }}
       >
-        <select
-          className="premium-select"
-          value={value}
-          onChange={(e) =>
-            onChange(
-              e.target.value
-            )
-          }
+        <span
+          style={{
+            fontWeight: 600,
+            fontSize: 15
+          }}
         >
-          {options.map(
-            (item) => (
-              <option
-                key={item}
-                value={item}
-              >
-                {item}
-              </option>
-            )
-          )}
-        </select>
+          {value}
+        </span>
 
         <ChevronDown
           size={18}
           style={{
-            position:
-              "absolute",
-            right: 18,
-            top: "50%",
-            transform:
-              "translateY(-50%)",
-            pointerEvents:
-              "none",
-            color:
-              "var(--muted)"
+            transform: open
+              ? "rotate(180deg)"
+              : "rotate(0deg)",
+            transition:
+              "0.2s ease"
           }}
         />
-      </div>
+      </button>
+
+      {open && (
+        <div
+          className="glass"
+          style={{
+            position:
+              "absolute",
+            top: "calc(100% + 10px)",
+            left: 0,
+            width: "100%",
+            borderRadius: 20,
+            padding: 10,
+            zIndex: 999
+          }}
+        >
+          <div
+            style={{
+              maxHeight: 260,
+              overflowY:
+                "auto",
+              display: "flex",
+              flexDirection:
+                "column",
+              gap: 6
+            }}
+          >
+            {options.map(
+              (option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => {
+                    onChange(
+                      option
+                    );
+                    setOpen(
+                      false
+                    );
+                  }}
+                  style={{
+                    height: 50,
+                    border:
+                      "none",
+                    borderRadius: 14,
+                    background:
+                      value ===
+                      option
+                        ? "rgba(124,92,255,0.14)"
+                        : "transparent",
+                    color:
+                      "var(--text)",
+                    display:
+                      "flex",
+                    alignItems:
+                      "center",
+                    justifyContent:
+                      "space-between",
+                    padding:
+                      "0 14px",
+                    fontWeight: 600
+                  }}
+                >
+                  <span>
+                    {option}
+                  </span>
+
+                  {value ===
+                    option && (
+                    <Check
+                      size={16}
+                    />
+                  )}
+                </button>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
